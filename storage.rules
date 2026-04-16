@@ -1,0 +1,23 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Slideshow images: anyone can read, only authenticated users can upload/delete
+    match /slideshow/{fileName} {
+      allow read: if true;
+      allow write, delete: if request.auth != null;
+    }
+
+    // Client logos: anyone can read, only authenticated users can upload/delete
+    match /clients/{fileName} {
+      allow read: if true;
+      allow write, delete: if request.auth != null;
+    }
+
+    // Team photos: anyone can read, only authenticated users can upload/delete
+    match /team/{fileName} {
+      allow read: if true;
+      allow write, delete: if request.auth != null;
+    }
+  }
+}

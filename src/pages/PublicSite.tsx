@@ -38,10 +38,10 @@ export default function PublicSite() {
     <div className="bg-[#0a0a0a] text-white font-raleway overflow-x-hidden">
       <Navbar activeSection={activeSection} />
       <Hero />
-      <About />
       <Services />
       <ScrollingImages />
       <Portfolio />
+      <About />
       <Team />
       <Contact />
       <Footer />

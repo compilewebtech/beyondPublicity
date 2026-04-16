@@ -79,23 +79,10 @@ export default function Hero() {
             onClick={() => setCurrentSlide(i)}
             className={`h-0.5 transition-all duration-500 ${
               i === currentSlide
-                ? "w-10 bg-[#c9a84c]"
+                ? "w-10 bg-[#ffffff]"
                 : "w-5 bg-white/25 hover:bg-white/40"
             }`}
             aria-label={`Slide ${i + 1}`}
-          />
-        ))}
-      </div>
-
-      {/* Animated lines */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-[2]">
-        {[...Array(5)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute h-px bg-gradient-to-r from-transparent via-[#c9a84c]/30 to-transparent"
-            style={{ top: `${20 + i * 15}%`, left: 0, right: 0 }}
-            animate={{ opacity: [0, 1, 0] }}
-            transition={{ duration: 4, delay: i * 0.5, repeat: Infinity, ease: "easeInOut" }}
           />
         ))}
       </div>
@@ -109,11 +96,11 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="flex items-center justify-center gap-4 mb-6"
         >
-          <div className="h-px w-12 bg-[#c9a84c]" />
-          <span className="text-[#c9a84c] text-xs tracking-[0.4em] uppercase font-light font-raleway">
+          <div className="h-px w-12 bg-[#ffffff]" />
+          <span className="text-white text-xs tracking-[0.4em] uppercase font-light font-raleway">
             Lebanon's Premier Production House
           </span>
-          <div className="h-px w-12 bg-[#c9a84c]" />
+          <div className="h-px w-12 bg-[#ffffff]" />
         </motion.div>
 */}
         {/* Logo Text */}
@@ -121,18 +108,10 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="font-cinzel text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-4 leading-tight tracking-wider"
+          className="font-inter text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-none tracking-wider"
         >
-          BeyondPublicity
+          TURN VISION<br />INTO IMPACT
         </motion.h1>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="font-cinzel text-lg md:text-2xl text-[#c9a84c] tracking-[0.5em] mb-8 font-light"
-        >
-          PRODUCTIONS
-        </motion.p>
 
         {/* Rotating Headline }
         <div className="h-16 flex items-center justify-center mb-10 overflow-hidden">
@@ -161,31 +140,6 @@ export default function Hero() {
           compelling ads, immersive experiences, and gripping movies.
         </motion.p>
 
-        {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => scrollTo("services")}
-            className="px-8 py-4 bg-[#c9a84c] text-black text-sm tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-all duration-300 hover:shadow-lg hover:shadow-[#c9a84c]/30"
-          >
-            Our Services
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => scrollTo("portfolio")}
-            className="px-8 py-4 border border-white/40 text-white text-sm tracking-widest uppercase font-light hover:border-[#c9a84c] hover:text-[#c9a84c] transition-all duration-300"
-          >
-            View Portfolio
-          </motion.button>
-        </motion.div>
-
         {/* Stats }
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -206,7 +160,7 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 1.4 + i * 0.1 }}
               className="text-center"
             >
-              <div className="font-cinzel text-3xl md:text-4xl font-bold text-[#c9a84c]">
+              <div className="font-inter text-3xl md:text-4xl font-bold text-white">
                 {stat.number}
               </div>
               <div className="text-white/50 text-xs tracking-widest uppercase mt-1 font-light">
@@ -224,14 +178,6 @@ export default function Hero() {
         transition={{ delay: 2, duration: 1 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
       >
-        <motion.span
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="text-white/40 text-xs tracking-widest uppercase"
-        >
-          Scroll
-        </motion.span>
-        <div className="w-px h-8 bg-gradient-to-b from-[#c9a84c]/60 to-transparent" />
       </motion.div>
     </section>
   );

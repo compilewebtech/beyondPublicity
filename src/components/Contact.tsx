@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 export default function Contact() {
   return (
     <section id="contact" className="relative py-28 bg-[#0a0a0a] overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#c9a84c]/40 to-transparent" />
-      <div className="absolute right-0 top-1/3 w-96 h-96 bg-[#c9a84c]/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute left-0 bottom-1/4 w-72 h-72 bg-[#c9a84c]/3 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#ffffff]/40 to-transparent" />
+      <div className="absolute right-0 top-1/3 w-96 h-96 bg-[#ffffff]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute left-0 bottom-1/4 w-72 h-72 bg-[#ffffff]/3 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-5xl mx-auto px-6">
         <motion.div
@@ -16,12 +16,12 @@ export default function Contact() {
           className="text-center mb-16"
         >
           <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="h-px w-12 bg-[#c9a84c]" />
-            <span className="text-[#c9a84c] text-xs tracking-[0.4em] uppercase font-light">Get In Touch</span>
-            <div className="h-px w-12 bg-[#c9a84c]" />
+            <div className="h-px w-12 bg-[#ffffff]" />
+            <span className="text-white text-xs tracking-[0.4em] uppercase font-light">Get In Touch</span>
+            <div className="h-px w-12 bg-[#ffffff]" />
           </div>
-          <h2 className="font-cinzel text-4xl md:text-5xl font-bold text-white mb-4">
-            Let's <span className="text-[#c9a84c]">Connect</span>
+          <h2 className="font-inter text-4xl md:text-5xl font-bold text-white mb-4">
+            Let's <span className="text-white">Connect</span>
           </h2>
           <p className="text-white/50 text-base font-light max-w-xl mx-auto">
             Ready to bring your vision to life? Choose the way that works best for you.
@@ -39,22 +39,22 @@ export default function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
             whileHover={{ y: -6 }}
-            className="group relative border border-white/10 bg-white/[0.02] p-10 text-center hover:border-[#c9a84c]/40 hover:bg-[#c9a84c]/5 transition-all duration-500"
+            className="group relative border border-white/10 bg-white/[0.02] p-10 text-center hover:border-[#ffffff]/40 hover:bg-[#ffffff]/5 transition-all duration-500"
           >
-            <div className="w-20 h-20 mx-auto mb-6 border-2 border-[#c9a84c]/40 rounded-full flex items-center justify-center group-hover:border-[#c9a84c] group-hover:bg-[#c9a84c]/10 transition-all duration-300">
-              <svg className="w-8 h-8 text-[#c9a84c]" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+            <div className="w-20 h-20 mx-auto mb-6 border-2 border-[#ffffff]/40 rounded-full flex items-center justify-center group-hover:border-[#ffffff] group-hover:bg-[#ffffff]/10 transition-all duration-300">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
               </svg>
             </div>
 
-            <h3 className="font-cinzel text-xl font-semibold text-white mb-3 group-hover:text-[#c9a84c] transition-colors duration-300">
+            <h3 className="font-inter text-xl font-semibold text-white mb-3 group-hover:text-white transition-colors duration-300">
               Schedule a Free Consultation
             </h3>
             <p className="text-white/40 text-sm font-light leading-relaxed mb-6">
               Book a free 30-minute call to discuss your project, vision, and how we can bring it to life.
             </p>
 
-            <span className="inline-flex items-center gap-2 px-6 py-3 bg-[#c9a84c] text-black text-xs tracking-widest uppercase font-semibold group-hover:bg-[#d4b86a] transition-all duration-300">
+            <span className="inline-flex items-center gap-2 px-6 py-3 bg-[#ffffff] text-black text-xs tracking-widest uppercase font-semibold group-hover:bg-[#d4b86a] transition-all duration-300">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -80,7 +80,7 @@ export default function Contact() {
               </svg>
             </div>
 
-            <h3 className="font-cinzel text-xl font-semibold text-white mb-3 group-hover:text-[#25D366] transition-colors duration-300">
+            <h3 className="font-inter text-xl font-semibold text-white mb-3 group-hover:text-[#25D366] transition-colors duration-300">
               Message Us on WhatsApp
             </h3>
             <p className="text-white/40 text-sm font-light leading-relaxed mb-6">
@@ -100,7 +100,7 @@ export default function Contact() {
         <div className="mt-12 grid sm:grid-cols-3 gap-6">
           {[
             { label: "Location", value: "Beirut, Lebanon", icon: "M15 10.5a3 3 0 11-6 0 3 3 0 016 0zM19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" },
-            { label: "Email", value: "info@BeyondPublicityproductions.com", icon: "M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" },
+            { label: "Email", value: "beyondpublicitymena@gmail.com", icon: "M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" },
             { label: "Phone", value: "+961 03 169 181", icon: "M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" },
           ].map((item, i) => (
             <motion.div
@@ -111,7 +111,7 @@ export default function Contact() {
               transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
               className="flex items-center gap-4 border border-white/5 bg-white/[0.01] p-4"
             >
-              <div className="flex-shrink-0 w-10 h-10 border border-[#c9a84c]/30 flex items-center justify-center text-[#c9a84c]">
+              <div className="flex-shrink-0 w-10 h-10 border border-[#ffffff]/30 flex items-center justify-center text-white">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
                 </svg>

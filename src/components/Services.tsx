@@ -36,9 +36,9 @@ const services = [
 export default function Services() {
   return (
     <section id="services" className="relative py-28 bg-[#080808] overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#c9a84c]/40 to-transparent" />
-      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#c9a84c]/20 to-transparent" />
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-80 h-80 bg-[#c9a84c]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#ffffff]/40 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#ffffff]/20 to-transparent" />
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-80 h-80 bg-[#ffffff]/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
@@ -50,12 +50,12 @@ export default function Services() {
           className="text-center mb-16"
         >
           <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="h-px w-12 bg-[#c9a84c]" />
-            <span className="text-[#c9a84c] text-xs tracking-[0.4em] uppercase font-light">What We Do</span>
-            <div className="h-px w-12 bg-[#c9a84c]" />
+            <div className="h-px w-12 bg-[#ffffff]" />
+            <span className="text-white text-xs tracking-[0.4em] uppercase font-light">What We Do</span>
+            <div className="h-px w-12 bg-[#ffffff]" />
           </div>
-          <h2 className="font-cinzel text-4xl md:text-5xl font-bold text-white mb-4">
-            Our <span className="text-[#c9a84c]">Services</span>
+          <h2 className="font-inter text-4xl md:text-5xl font-bold text-white mb-4">
+            Our <span className="text-white">Services</span>
           </h2>
           <p className="text-white/50 text-base font-light max-w-2xl mx-auto">
             We cover every aspect of production, turning ideas into cinematic brilliance,
@@ -73,23 +73,23 @@ export default function Services() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
               whileHover={{ y: -4 }}
-              className="group relative p-8 border border-white/5 bg-white/[0.02] hover:border-[#c9a84c]/50 hover:bg-[#c9a84c]/5 transition-all duration-500 cursor-default"
+              className="group relative p-8 border border-white/5 bg-white/[0.02] hover:border-[#ffffff]/50 hover:bg-[#ffffff]/5 transition-all duration-500 cursor-default"
             >
-              <div className="absolute top-0 left-0 w-0 h-0.5 bg-[#c9a84c] group-hover:w-full transition-all duration-500" />
+              <div className="absolute top-0 left-0 w-0 h-0.5 bg-[#ffffff] group-hover:w-full transition-all duration-500" />
 
-              <div className="text-[#c9a84c] mb-6 group-hover:scale-110 transition-transform duration-300">
+              <div className="text-white mb-6 group-hover:scale-110 transition-transform duration-300">
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d={service.icon} />
                 </svg>
               </div>
-              <h3 className="font-cinzel text-lg font-semibold text-white mb-3 group-hover:text-[#c9a84c] transition-colors duration-300">
+              <h3 className="font-inter text-lg font-semibold text-white mb-3 group-hover:text-white transition-colors duration-300">
                 {service.title}
               </h3>
               <p className="text-white/50 text-sm font-light leading-relaxed">
                 {service.description}
               </p>
 
-              <div className="mt-6 flex items-center gap-2 text-[#c9a84c]/0 group-hover:text-[#c9a84c] transition-all duration-300">
+              <div className="mt-6 flex items-center gap-2 text-white/0 group-hover:text-white transition-all duration-300">
                 <span className="text-xs tracking-widest uppercase font-light">Learn More</span>
                 <svg className="w-4 h-4 -translate-x-2 group-hover:translate-x-0 transition-transform duration-300" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />

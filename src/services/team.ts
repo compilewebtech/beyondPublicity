@@ -31,7 +31,7 @@ export const defaultTeamMembers: Record<OrganKey, TeamMember> = {
     storagePath: "",
     skills: ["Strategic Vision", "Creative Direction", "Business Leadership"],
     vision: "Every great production starts with a bold idea. I see beyond what's in front of us — turning raw concepts into stories that move people.",
-    color: "#c9a84c",
+    color: "#ffffff",
   },
   heart: {
     id: "heart",

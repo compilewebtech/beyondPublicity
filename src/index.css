@@ -1,8 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-cinzel: 'Cinzel', serif;
-  --font-raleway: 'Raleway', sans-serif;
+  --font-inter: 'inter' , sans-serif;
 }
 
 * {
@@ -14,19 +13,15 @@ html {
 }
 
 body {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'inter', sans-serif;
   background-color: #0a0a0a;
   color: white;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.font-cinzel {
-  font-family: 'Cinzel', serif;
-}
-
-.font-raleway {
-  font-family: 'Raleway', sans-serif;
+.font-inter {
+  font-family: 'inter', sans-serif;
 }
 
 /* Custom scrollbar */
@@ -39,16 +34,16 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c9a84c40;
+  background: #ffffff40;
   border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #c9a84c;
+  background: #ffffff;
 }
 
 /* Selection */
 ::selection {
-  background: #c9a84c30;
-  color: #c9a84c;
+  background: #ffffff30;
+  color: #ffffff;
 }

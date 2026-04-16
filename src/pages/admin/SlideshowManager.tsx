@@ -97,7 +97,7 @@ export default function SlideshowManager() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="w-8 h-8 border-2 border-[#c9a84c] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#ffffff] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -105,7 +105,7 @@ export default function SlideshowManager() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="font-cinzel text-2xl font-bold text-white mb-2">Slideshow</h1>
+        <h1 className="font-inter text-2xl font-bold text-white mb-2">Slideshow</h1>
         <p className="text-white/40 text-sm font-light">
           {slides.length} {slides.length === 1 ? "slide" : "slides"} — shown in the hero background
         </p>
@@ -113,9 +113,9 @@ export default function SlideshowManager() {
 
       <form
         onSubmit={handleUpload}
-        className="border border-[#c9a84c]/30 bg-[#c9a84c]/5 p-6 mb-8"
+        className="border border-[#ffffff]/30 bg-[#ffffff]/5 p-6 mb-8"
       >
-        <h2 className="font-cinzel text-lg font-semibold text-white mb-5">Upload New Slide</h2>
+        <h2 className="font-inter text-lg font-semibold text-white mb-5">Upload New Slide</h2>
 
         <div className="grid md:grid-cols-[1fr_auto] gap-6 items-start">
           <div>
@@ -127,7 +127,7 @@ export default function SlideshowManager() {
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              className="block w-full text-white/70 text-sm file:mr-4 file:py-2 file:px-4 file:border-0 file:text-xs file:tracking-widest file:uppercase file:font-semibold file:bg-[#c9a84c] file:text-black hover:file:bg-[#d4b86a] file:cursor-pointer cursor-pointer"
+              className="block w-full text-white/70 text-sm file:mr-4 file:py-2 file:px-4 file:border-0 file:text-xs file:tracking-widest file:uppercase file:font-semibold file:bg-[#ffffff] file:text-black hover:file:bg-[#d4b86a] file:cursor-pointer cursor-pointer"
             />
             <p className="text-white/30 text-xs mt-2 font-light">
               Recommended: 1920×1080 or larger, under 10MB
@@ -144,7 +144,7 @@ export default function SlideshowManager() {
         <button
           type="submit"
           disabled={uploading || !file}
-          className="mt-6 px-8 py-3 bg-[#c9a84c] text-black text-sm tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors disabled:opacity-50"
+          className="mt-6 px-8 py-3 bg-[#ffffff] text-black text-sm tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors disabled:opacity-50"
         >
           {uploading ? "Uploading..." : "Upload Slide"}
         </button>
@@ -160,8 +160,8 @@ export default function SlideshowManager() {
             <div key={slide.id} className="border border-white/10 bg-white/[0.02] overflow-hidden group">
               <div className="relative aspect-video">
                 <img src={slide.url} alt={`Slide ${i + 1}`} className="w-full h-full object-cover" />
-                <div className="absolute top-2 left-2 px-2 py-1 bg-black/70 border border-[#c9a84c]/30 backdrop-blur-sm">
-                  <span className="text-[#c9a84c] text-[10px] tracking-widest uppercase font-light">
+                <div className="absolute top-2 left-2 px-2 py-1 bg-black/70 border border-[#ffffff]/30 backdrop-blur-sm">
+                  <span className="text-white text-[10px] tracking-widest uppercase font-light">
                     #{i + 1}
                   </span>
                 </div>
@@ -171,7 +171,7 @@ export default function SlideshowManager() {
                   onClick={() => handleMove(slide, -1)}
                   disabled={i === 0}
                   title="Move up"
-                  className="py-2 px-3 border border-white/10 text-white/50 text-xs hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                  className="py-2 px-3 border border-white/10 text-white/50 text-xs hover:border-[#ffffff]/60 hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                 >
                   ↑
                 </button>
@@ -179,7 +179,7 @@ export default function SlideshowManager() {
                   onClick={() => handleMove(slide, 1)}
                   disabled={i === slides.length - 1}
                   title="Move down"
-                  className="py-2 px-3 border border-white/10 text-white/50 text-xs hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                  className="py-2 px-3 border border-white/10 text-white/50 text-xs hover:border-[#ffffff]/60 hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                 >
                   ↓
                 </button>

@@ -131,7 +131,7 @@ export default function ClientsManager() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="w-8 h-8 border-2 border-[#c9a84c] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#ffffff] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -140,7 +140,7 @@ export default function ClientsManager() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="font-cinzel text-2xl font-bold text-white mb-2">Clients</h1>
+          <h1 className="font-inter text-2xl font-bold text-white mb-2">Clients</h1>
           <p className="text-white/40 text-sm font-light">
             {clients.length} {clients.length === 1 ? "client" : "clients"} — shown in the "Trusted By" strip
           </p>
@@ -154,7 +154,7 @@ export default function ClientsManager() {
             setFile(null);
             setPreview(null);
           }}
-          className="px-5 py-2.5 bg-[#c9a84c] text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors"
+          className="px-5 py-2.5 bg-[#ffffff] text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors"
         >
           {showForm ? "Close" : "+ Add Client"}
         </button>
@@ -163,10 +163,10 @@ export default function ClientsManager() {
       {showForm && (
         <form
           onSubmit={handleSubmit}
-          className="border border-[#c9a84c]/30 bg-[#c9a84c]/5 p-6 mb-8 space-y-5"
+          className="border border-[#ffffff]/30 bg-[#ffffff]/5 p-6 mb-8 space-y-5"
         >
           <div className="flex items-center justify-between">
-            <h2 className="font-cinzel text-lg font-semibold text-white">
+            <h2 className="font-inter text-lg font-semibold text-white">
               {editingId ? "Edit Client" : "Add New Client"}
             </h2>
             <button
@@ -187,7 +187,7 @@ export default function ClientsManager() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#c9a84c]/60 transition-colors"
+              className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors"
               placeholder="Brand or company name"
             />
           </div>
@@ -202,7 +202,7 @@ export default function ClientsManager() {
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
-                className="block w-full text-white/70 text-sm file:mr-4 file:py-2 file:px-4 file:border-0 file:text-xs file:tracking-widest file:uppercase file:font-semibold file:bg-[#c9a84c] file:text-black hover:file:bg-[#d4b86a] file:cursor-pointer cursor-pointer"
+                className="block w-full text-white/70 text-sm file:mr-4 file:py-2 file:px-4 file:border-0 file:text-xs file:tracking-widest file:uppercase file:font-semibold file:bg-[#ffffff] file:text-black hover:file:bg-[#d4b86a] file:cursor-pointer cursor-pointer"
               />
               <p className="text-white/30 text-xs mt-2 font-light">
                 PNG with transparent background works best
@@ -219,7 +219,7 @@ export default function ClientsManager() {
           <button
             type="submit"
             disabled={saving}
-            className="px-8 py-3 bg-[#c9a84c] text-black text-sm tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors disabled:opacity-50"
+            className="px-8 py-3 bg-[#ffffff] text-black text-sm tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors disabled:opacity-50"
           >
             {saving ? "Saving..." : editingId ? "Update Client" : "Add Client"}
           </button>
@@ -238,13 +238,13 @@ export default function ClientsManager() {
                 <img src={client.logoUrl} alt={client.name} className="max-w-full max-h-full object-contain" />
               </div>
               <div className="p-4">
-                <h3 className="font-cinzel text-sm font-semibold text-white mb-3 truncate">{client.name}</h3>
+                <h3 className="font-inter text-sm font-semibold text-white mb-3 truncate">{client.name}</h3>
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleMove(client, -1)}
                     disabled={i === 0}
                     title="Move up"
-                    className="py-2 px-3 border border-white/10 text-white/50 text-xs hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="py-2 px-3 border border-white/10 text-white/50 text-xs hover:border-[#ffffff]/60 hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                   >
                     ↑
                   </button>
@@ -252,13 +252,13 @@ export default function ClientsManager() {
                     onClick={() => handleMove(client, 1)}
                     disabled={i === clients.length - 1}
                     title="Move down"
-                    className="py-2 px-3 border border-white/10 text-white/50 text-xs hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="py-2 px-3 border border-white/10 text-white/50 text-xs hover:border-[#ffffff]/60 hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                   >
                     ↓
                   </button>
                   <button
                     onClick={() => handleEdit(client)}
-                    className="flex-1 py-2 border border-white/10 text-white/50 text-xs tracking-widest uppercase font-light hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-colors"
+                    className="flex-1 py-2 border border-white/10 text-white/50 text-xs tracking-widest uppercase font-light hover:border-[#ffffff]/60 hover:text-white transition-colors"
                   >
                     Edit
                   </button>

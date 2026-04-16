@@ -3,13 +3,13 @@ import { motion } from "framer-motion";
 export default function About() {
   return (
     <section id="about" className="relative py-28 overflow-hidden bg-[#0a0a0a]">
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#c9a84c]/40 to-transparent" />
-      <div className="absolute -left-40 top-1/2 -translate-y-1/2 w-80 h-80 bg-[#c9a84c]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#ffffff]/40 to-transparent" />
+      <div className="absolute -left-40 top-1/2 -translate-y-1/2 w-80 h-80 bg-[#ffffff]/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center gap-4 mb-4">
-          <div className="h-px w-12 bg-[#c9a84c]" />
-          <span className="text-[#c9a84c] text-xs tracking-[0.4em] uppercase font-light">About Us</span>
+          <div className="h-px w-12 bg-[#ffffff]" />
+          <span className="text-white text-xs tracking-[0.4em] uppercase font-light">About Us</span>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -20,10 +20,6 @@ export default function About() {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="font-cinzel text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-              Beyond Conventional{" "}
-              <span className="text-[#c9a84c]">Limits</span>
-            </h2>
             <p className="text-white/60 text-base leading-relaxed mb-6 font-light">
               Welcome to BeyondPublicity Productions, where we redefine the art of storytelling
               beyond conventional limits. Our team is dedicated to crafting excellence,
@@ -54,7 +50,7 @@ export default function About() {
                   transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
                   className="flex gap-3"
                 >
-                  <div className="flex-shrink-0 w-10 h-10 border border-[#c9a84c]/30 flex items-center justify-center text-[#c9a84c]">
+                  <div className="flex-shrink-0 w-10 h-10 border border-[#ffffff]/30 flex items-center justify-center text-white">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
                     </svg>
@@ -77,8 +73,8 @@ export default function About() {
             className="relative"
           >
             <div className="relative">
-              <div className="absolute -top-4 -left-4 w-2/3 h-2/3 border-l-2 border-t-2 border-[#c9a84c]/50 pointer-events-none z-10" />
-              <div className="absolute -bottom-4 -right-4 w-2/3 h-2/3 border-r-2 border-b-2 border-[#c9a84c]/50 pointer-events-none z-10" />
+              <div className="absolute -top-4 -left-4 w-2/3 h-2/3 border-l-2 border-t-2 border-[#ffffff]/50 pointer-events-none z-10" />
+              <div className="absolute -bottom-4 -right-4 w-2/3 h-2/3 border-r-2 border-b-2 border-[#ffffff]/50 pointer-events-none z-10" />
 
               <img
                 src="/images/about-bg.jpg"
@@ -92,9 +88,9 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.5 }}
-                className="absolute bottom-8 left-8 bg-black/80 backdrop-blur-sm border border-[#c9a84c]/30 px-6 py-4"
+                className="absolute bottom-8 left-8 bg-black/80 backdrop-blur-sm border border-[#ffffff]/30 px-6 py-4"
               >
-                <div className="font-cinzel text-[#c9a84c] text-2xl font-bold">10+</div>
+                <div className="font-inter text-white text-2xl font-bold">10+</div>
                 <div className="text-white/60 text-xs tracking-widest uppercase font-light mt-1">
                   Years of Excellence
                 </div>

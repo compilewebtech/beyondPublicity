@@ -26,8 +26,8 @@ export default function AdminLayout() {
       <header className="border-b border-white/10 bg-[#0a0a0a]/95 backdrop-blur-sm sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-8">
-            <NavLink to="/admin" className="font-cinzel text-lg font-bold">
-              Beyond<span className="text-[#c9a84c]">Publicity</span>
+            <NavLink to="/admin" className="font-inter text-lg font-bold">
+              Beyond<span className="text-white">Publicity</span>
               <span className="text-white/30 text-xs ml-2 font-raleway font-light">CMS</span>
             </NavLink>
 
@@ -40,7 +40,7 @@ export default function AdminLayout() {
                   className={({ isActive }) =>
                     `px-4 py-2 text-xs tracking-widest uppercase font-light transition-colors ${
                       isActive
-                        ? "text-[#c9a84c] bg-[#c9a84c]/10"
+                        ? "text-white bg-[#ffffff]/10"
                         : "text-white/50 hover:text-white"
                     }`
                   }
@@ -54,7 +54,7 @@ export default function AdminLayout() {
           <div className="flex items-center gap-4">
             <NavLink
               to="/"
-              className="text-white/40 text-xs tracking-widest uppercase font-light hover:text-[#c9a84c] transition-colors"
+              className="text-white/40 text-xs tracking-widest uppercase font-light hover:text-white transition-colors"
             >
               View Site
             </NavLink>

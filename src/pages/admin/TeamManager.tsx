@@ -88,7 +88,7 @@ export default function TeamManager() {
   if (loading || !members || !draft) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="w-8 h-8 border-2 border-[#c9a84c] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#ffffff] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -96,7 +96,7 @@ export default function TeamManager() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="font-cinzel text-2xl font-bold text-white mb-2">Team</h1>
+        <h1 className="font-inter text-2xl font-bold text-white mb-2">Team</h1>
         <p className="text-white/40 text-sm font-light">
           Edit the 4 organ members shown in the "Meet the Team" section
         </p>
@@ -123,7 +123,7 @@ export default function TeamManager() {
         })}
       </div>
 
-      <div className="border border-[#c9a84c]/30 bg-[#c9a84c]/5 p-6 md:p-8 space-y-6">
+      <div className="border border-[#ffffff]/30 bg-[#ffffff]/5 p-6 md:p-8 space-y-6">
         <div className="grid md:grid-cols-[auto_1fr] gap-6">
           <div className="flex flex-col items-center gap-3">
             <div
@@ -142,7 +142,7 @@ export default function TeamManager() {
                 />
               ) : (
                 <div
-                  className="w-full h-full flex items-center justify-center font-cinzel text-3xl font-bold"
+                  className="w-full h-full flex items-center justify-center font-inter text-3xl font-bold"
                   style={{ color: draft.color }}
                 >
                   {draft.name.split(" ").map((n) => n[0]).join("")}
@@ -157,7 +157,7 @@ export default function TeamManager() {
                 disabled={uploading}
                 className="hidden"
               />
-              <span className="block px-4 py-2 border border-white/20 text-white/70 text-[10px] tracking-widest uppercase font-light hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-colors">
+              <span className="block px-4 py-2 border border-white/20 text-white/70 text-[10px] tracking-widest uppercase font-light hover:border-[#ffffff]/60 hover:text-white transition-colors">
                 {uploading ? "Uploading..." : "Change Photo"}
               </span>
             </label>
@@ -172,7 +172,7 @@ export default function TeamManager() {
                 type="text"
                 value={draft.name}
                 onChange={(e) => updateDraft("name", e.target.value)}
-                className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#c9a84c]/60 transition-colors"
+                className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors"
               />
             </div>
             <div>
@@ -183,7 +183,7 @@ export default function TeamManager() {
                 type="text"
                 value={draft.role}
                 onChange={(e) => updateDraft("role", e.target.value)}
-                className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#c9a84c]/60 transition-colors"
+                className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors"
               />
             </div>
             <div>
@@ -194,7 +194,7 @@ export default function TeamManager() {
                 type="text"
                 value={draft.label}
                 onChange={(e) => updateDraft("label", e.target.value)}
-                className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#c9a84c]/60 transition-colors"
+                className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors"
               />
             </div>
             <div>
@@ -212,7 +212,7 @@ export default function TeamManager() {
                   type="text"
                   value={draft.color}
                   onChange={(e) => updateDraft("color", e.target.value)}
-                  className="flex-1 bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#c9a84c]/60 transition-colors"
+                  className="flex-1 bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors"
                 />
               </div>
             </div>
@@ -227,7 +227,7 @@ export default function TeamManager() {
             value={draft.vision}
             onChange={(e) => updateDraft("vision", e.target.value)}
             rows={3}
-            className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#c9a84c]/60 transition-colors resize-none"
+            className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors resize-none"
           />
         </div>
 
@@ -244,7 +244,7 @@ export default function TeamManager() {
                 e.target.value.split(",").map((s) => s.trim()).filter(Boolean)
               )
             }
-            className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#c9a84c]/60 transition-colors"
+            className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors"
             placeholder="Skill one, Skill two, Skill three"
           />
           <div className="flex flex-wrap gap-2 mt-3">
@@ -267,7 +267,7 @@ export default function TeamManager() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="px-8 py-3 bg-[#c9a84c] text-black text-sm tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors disabled:opacity-50"
+          className="px-8 py-3 bg-[#ffffff] text-black text-sm tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors disabled:opacity-50"
         >
           {saving ? "Saving..." : "Save Changes"}
         </button>

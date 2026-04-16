@@ -54,7 +54,7 @@ export default function Dashboard() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="w-8 h-8 border-2 border-[#c9a84c] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#ffffff] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -62,7 +62,7 @@ export default function Dashboard() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="font-cinzel text-2xl font-bold text-white mb-2">Dashboard</h1>
+        <h1 className="font-inter text-2xl font-bold text-white mb-2">Dashboard</h1>
         <p className="text-white/40 text-sm font-light">Overview of your website content</p>
       </div>
 
@@ -72,10 +72,10 @@ export default function Dashboard() {
             <p className="text-white/40 text-xs tracking-widest uppercase font-light mb-2">
               {card.label}
             </p>
-            <p className="font-cinzel text-3xl font-bold text-[#c9a84c] mb-4">{card.value}</p>
+            <p className="font-inter text-3xl font-bold text-white mb-4">{card.value}</p>
             <Link
               to={card.link}
-              className="text-white/50 text-xs tracking-widest uppercase font-light hover:text-[#c9a84c] transition-colors"
+              className="text-white/50 text-xs tracking-widest uppercase font-light hover:text-white transition-colors"
             >
               {card.action} →
             </Link>
@@ -84,29 +84,29 @@ export default function Dashboard() {
       </div>
 
       <div className="border border-white/10 bg-white/[0.02] p-6">
-        <h2 className="font-cinzel text-lg font-semibold text-white mb-4">Quick Actions</h2>
+        <h2 className="font-inter text-lg font-semibold text-white mb-4">Quick Actions</h2>
         <div className="flex flex-wrap gap-3">
           <Link
             to="/admin/portfolio?action=add"
-            className="px-5 py-2.5 bg-[#c9a84c] text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors"
+            className="px-5 py-2.5 bg-[#ffffff] text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors"
           >
             Add Portfolio Item
           </Link>
           <Link
             to="/admin/slideshow"
-            className="px-5 py-2.5 border border-white/20 text-white/60 text-xs tracking-widest uppercase font-light hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-colors"
+            className="px-5 py-2.5 border border-white/20 text-white/60 text-xs tracking-widest uppercase font-light hover:border-[#ffffff]/60 hover:text-white transition-colors"
           >
             Upload Slide
           </Link>
           <Link
             to="/admin/team"
-            className="px-5 py-2.5 border border-white/20 text-white/60 text-xs tracking-widest uppercase font-light hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-colors"
+            className="px-5 py-2.5 border border-white/20 text-white/60 text-xs tracking-widest uppercase font-light hover:border-[#ffffff]/60 hover:text-white transition-colors"
           >
             Edit Team
           </Link>
           <Link
             to="/"
-            className="px-5 py-2.5 border border-white/20 text-white/60 text-xs tracking-widest uppercase font-light hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-colors"
+            className="px-5 py-2.5 border border-white/20 text-white/60 text-xs tracking-widest uppercase font-light hover:border-[#ffffff]/60 hover:text-white transition-colors"
           >
             View Live Site
           </Link>

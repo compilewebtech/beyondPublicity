@@ -7,29 +7,22 @@ export default function Footer() {
   return (
     <footer className="bg-[#050505] border-t border-white/5">
       {/* Top bar with gold line */}
-      <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-[#c9a84c] to-transparent" />
+      <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-[#ffffff] to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="mb-6">
-              <span className="font-cinzel text-[#c9a84c] text-2xl font-bold tracking-widest block">
+              <span className="font-inter text-white text-2xl font-bold tracking-widest block">
                 BeyondPublicity
               </span>
-              <span className="font-raleway text-white/50 text-xs tracking-[0.4em] font-light">
-                PRODUCTIONS
-              </span>
             </div>
-            <p className="text-white/40 text-sm font-light leading-relaxed max-w-xs">
-              Lebanon's premier production house, redefining the art of storytelling
-              beyond conventional limits. Where innovation meets impact.
-            </p>
             <div className="flex gap-3 mt-6">
               {["IG", "YT", "FB", "LI"].map((s) => (
                 <button
                   key={s}
-                  className="w-9 h-9 border border-white/10 text-white/30 text-xs font-light hover:border-[#c9a84c] hover:text-[#c9a84c] transition-all duration-300"
+                  className="w-9 h-9 border border-white/10 text-white/30 text-xs font-light hover:border-[#ffffff] hover:text-white transition-all duration-300"
                   aria-label={s}
                 >
                   {s}
@@ -55,9 +48,9 @@ export default function Footer() {
                 <li key={link.id}>
                   <button
                     onClick={() => scrollTo(link.id)}
-                    className="text-white/40 text-sm font-light hover:text-[#c9a84c] transition-colors duration-300 flex items-center gap-2 group"
+                    className="text-white/40 text-sm font-light hover:text-white transition-colors duration-300 flex items-center gap-2 group"
                   >
-                    <span className="w-0 h-px bg-[#c9a84c] group-hover:w-4 transition-all duration-300" />
+                    <span className="w-0 h-px bg-[#ffffff] group-hover:w-4 transition-all duration-300" />
                     {link.label}
                   </button>
                 </li>
@@ -82,9 +75,9 @@ export default function Footer() {
                 <li key={s}>
                   <button
                     onClick={() => scrollTo("services")}
-                    className="text-white/40 text-sm font-light hover:text-[#c9a84c] transition-colors duration-300 flex items-center gap-2 group text-left"
+                    className="text-white/40 text-sm font-light hover:text-white transition-colors duration-300 flex items-center gap-2 group text-left"
                   >
-                    <span className="w-0 h-px bg-[#c9a84c] group-hover:w-4 transition-all duration-300 flex-shrink-0" />
+                    <span className="w-0 h-px bg-[#ffffff] group-hover:w-4 transition-all duration-300 flex-shrink-0" />
                     {s}
                   </button>
                 </li>
@@ -96,13 +89,13 @@ export default function Footer() {
         {/* Divider */}
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-white/25 text-xs font-light tracking-wider">
-            © {new Date().getFullYear()} BeyondPublicity Productions. All rights reserved.
+            © {new Date().getFullYear()} BeyondPublicity. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <button className="text-white/25 text-xs font-light hover:text-[#c9a84c] transition-colors duration-300">
+            <button className="text-white/25 text-xs font-light hover:text-white transition-colors duration-300">
               Privacy Policy
             </button>
-            <button className="text-white/25 text-xs font-light hover:text-[#c9a84c] transition-colors duration-300">
+            <button className="text-white/25 text-xs font-light hover:text-white transition-colors duration-300">
               Terms of Service
             </button>
           </div>

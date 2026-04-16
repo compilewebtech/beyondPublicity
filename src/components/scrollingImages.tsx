@@ -39,12 +39,12 @@ export default function ScrollingImages() {
         className="text-center mb-8"
       >
         <div className="flex items-center justify-center gap-4 mb-4">
-          <div className="h-px w-12 bg-[#c9a84c]" />
-          <span className="text-[#c9a84c] text-xs tracking-[0.4em] uppercase font-light">Trusted By</span>
-          <div className="h-px w-12 bg-[#c9a84c]" />
+          <div className="h-px w-12 bg-[#ffffff]" />
+          <span className="text-white text-xs tracking-[0.4em] uppercase font-light">Trusted By</span>
+          <div className="h-px w-12 bg-[#ffffff]" />
         </div>
-        <h3 className="font-cinzel text-lg md:text-2xl text-white font-bold">
-          Our <span className="text-[#c9a84c]">Clients</span>
+        <h3 className="font-inter text-lg md:text-2xl text-white font-bold">
+          Our <span className="text-white">Clients</span>
         </h3>
       </motion.div>
 

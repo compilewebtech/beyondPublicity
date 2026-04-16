@@ -16,7 +16,7 @@ export default function Login() {
   if (authLoading) {
     return (
       <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#c9a84c] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#ffffff] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -44,8 +44,8 @@ export default function Login() {
     <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="font-cinzel text-2xl font-bold text-white mb-2">
-            Beyond<span className="text-[#c9a84c]">Publicity</span>
+          <h1 className="font-inter text-2xl font-bold text-white mb-2">
+            Beyond<span className="text-white">Publicity</span>
           </h1>
           <p className="text-white/40 text-sm font-light">Admin Panel</p>
         </div>
@@ -66,7 +66,7 @@ export default function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#c9a84c]/60 transition-colors"
+              className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors"
               placeholder="admin@BeyondPublicityproductions.com"
             />
           </div>
@@ -80,7 +80,7 @@ export default function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#c9a84c]/60 transition-colors"
+              className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors"
               placeholder="••••••••"
             />
           </div>
@@ -88,7 +88,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-[#c9a84c] text-black text-sm tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-all duration-300 disabled:opacity-50"
+            className="w-full py-3 bg-[#ffffff] text-black text-sm tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-all duration-300 disabled:opacity-50"
           >
             {loading ? "Signing in..." : "Sign In"}
           </button>

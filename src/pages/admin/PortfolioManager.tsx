@@ -120,7 +120,7 @@ export default function PortfolioManager() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="w-8 h-8 border-2 border-[#c9a84c] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#ffffff] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -129,7 +129,7 @@ export default function PortfolioManager() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="font-cinzel text-2xl font-bold text-white mb-2">Portfolio</h1>
+          <h1 className="font-inter text-2xl font-bold text-white mb-2">Portfolio</h1>
           <p className="text-white/40 text-sm font-light">{items.length} items</p>
         </div>
         <button
@@ -138,16 +138,16 @@ export default function PortfolioManager() {
             setEditingId(null);
             setForm(emptyForm);
           }}
-          className="px-5 py-2.5 bg-[#c9a84c] text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors"
+          className="px-5 py-2.5 bg-[#ffffff] text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors"
         >
           + Add Item
         </button>
       </div>
 
       {showForm && (
-        <div className="border border-[#c9a84c]/30 bg-[#c9a84c]/5 p-6 mb-8">
+        <div className="border border-[#ffffff]/30 bg-[#ffffff]/5 p-6 mb-8">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="font-cinzel text-lg font-semibold text-white">
+            <h2 className="font-inter text-lg font-semibold text-white">
               {editingId ? "Edit Item" : "Add New Portfolio Item"}
             </h2>
             <button
@@ -168,7 +168,7 @@ export default function PortfolioManager() {
                 value={form.youtubeUrl}
                 onChange={(e) => handleYoutubeUrl(e.target.value)}
                 required
-                className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#c9a84c]/60 transition-colors"
+                className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors"
                 placeholder="https://www.youtube.com/watch?v=..."
               />
               {form.videoId && (
@@ -179,7 +179,7 @@ export default function PortfolioManager() {
                     className="w-40 h-auto border border-white/10"
                   />
                   <p className="text-white/30 text-xs mt-1">
-                    Video ID: <span className="text-[#c9a84c]">{form.videoId}</span>
+                    Video ID: <span className="text-white">{form.videoId}</span>
                   </p>
                 </div>
               )}
@@ -195,7 +195,7 @@ export default function PortfolioManager() {
                   value={form.title}
                   onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))}
                   required
-                  className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#c9a84c]/60 transition-colors"
+                  className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors"
                   placeholder="Project title"
                 />
               </div>
@@ -207,7 +207,7 @@ export default function PortfolioManager() {
                   value={form.category}
                   onChange={(e) => setForm((p) => ({ ...p, category: e.target.value }))}
                   required
-                  className="w-full bg-[#0a0a0a] border border-white/10 text-white/80 px-4 py-3 text-sm font-light focus:outline-none focus:border-[#c9a84c]/60 transition-colors"
+                  className="w-full bg-[#0a0a0a] border border-white/10 text-white/80 px-4 py-3 text-sm font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors"
                 >
                   <option value="" disabled>Select category</option>
                   {categories.map((cat) => (
@@ -224,7 +224,7 @@ export default function PortfolioManager() {
                   value={form.year}
                   onChange={(e) => setForm((p) => ({ ...p, year: e.target.value }))}
                   required
-                  className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#c9a84c]/60 transition-colors"
+                  className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors"
                   placeholder="2024"
                 />
               </div>
@@ -239,7 +239,7 @@ export default function PortfolioManager() {
                 onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}
                 required
                 rows={3}
-                className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#c9a84c]/60 transition-colors resize-none"
+                className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors resize-none"
                 placeholder="Brief description of the project..."
               />
             </div>
@@ -247,7 +247,7 @@ export default function PortfolioManager() {
             <button
               type="submit"
               disabled={saving}
-              className="px-8 py-3 bg-[#c9a84c] text-black text-sm tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors disabled:opacity-50"
+              className="px-8 py-3 bg-[#ffffff] text-black text-sm tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors disabled:opacity-50"
             >
               {saving ? "Saving..." : editingId ? "Update Item" : "Add to Portfolio"}
             </button>
@@ -260,7 +260,7 @@ export default function PortfolioManager() {
           <p className="text-white/40 text-sm font-light mb-4">No portfolio items yet</p>
           <button
             onClick={() => setShowForm(true)}
-            className="px-5 py-2.5 bg-[#c9a84c] text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors"
+            className="px-5 py-2.5 bg-[#ffffff] text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors"
           >
             Add Your First Item
           </button>
@@ -275,8 +275,8 @@ export default function PortfolioManager() {
                   alt={item.title}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute top-2 left-2 px-2 py-1 bg-black/70 border border-[#c9a84c]/30 backdrop-blur-sm">
-                  <span className="text-[#c9a84c] text-[10px] tracking-widest uppercase font-light">
+                <div className="absolute top-2 left-2 px-2 py-1 bg-black/70 border border-[#ffffff]/30 backdrop-blur-sm">
+                  <span className="text-white text-[10px] tracking-widest uppercase font-light">
                     {item.category}
                   </span>
                 </div>
@@ -286,12 +286,12 @@ export default function PortfolioManager() {
               </div>
 
               <div className="p-4">
-                <h3 className="font-cinzel text-sm font-semibold text-white mb-1 truncate">{item.title}</h3>
+                <h3 className="font-inter text-sm font-semibold text-white mb-1 truncate">{item.title}</h3>
                 <p className="text-white/40 text-xs font-light line-clamp-2 mb-3">{item.description}</p>
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleEdit(item)}
-                    className="flex-1 py-2 border border-white/10 text-white/50 text-xs tracking-widest uppercase font-light hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-colors"
+                    className="flex-1 py-2 border border-white/10 text-white/50 text-xs tracking-widest uppercase font-light hover:border-[#ffffff]/60 hover:text-white transition-colors"
                   >
                     Edit
                   </button>

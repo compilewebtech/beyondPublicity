@@ -86,9 +86,9 @@ export default function Portfolio() {
 
   return (
     <section id="portfolio" className="relative py-28 bg-[#0a0a0a] overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#c9a84c]/40 to-transparent" />
-      <div className="absolute left-0 top-1/4 w-72 h-72 bg-[#c9a84c]/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute right-0 bottom-1/4 w-96 h-96 bg-[#c9a84c]/3 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#ffffff]/40 to-transparent" />
+      <div className="absolute left-0 top-1/4 w-72 h-72 bg-[#ffffff]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute right-0 bottom-1/4 w-96 h-96 bg-[#ffffff]/3 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
@@ -100,12 +100,12 @@ export default function Portfolio() {
           className="text-center mb-12"
         >
           <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="h-px w-12 bg-[#c9a84c]" />
-            <span className="text-[#c9a84c] text-xs tracking-[0.4em] uppercase font-light">Our Work</span>
-            <div className="h-px w-12 bg-[#c9a84c]" />
+            <div className="h-px w-12 bg-[#ffffff]" />
+            <span className="text-white text-xs tracking-[0.4em] uppercase font-light">Our Work</span>
+            <div className="h-px w-12 bg-[#ffffff]" />
           </div>
-          <h2 className="font-cinzel text-4xl md:text-5xl font-bold text-white mb-4">
-            Featured <span className="text-[#c9a84c]">Projects</span>
+          <h2 className="font-inter text-4xl md:text-5xl font-bold text-white mb-4">
+            Featured <span className="text-white">Projects</span>
           </h2>
           <p className="text-white/50 text-base font-light max-w-xl mx-auto">
             Come with a project, leave with a product. A showcase of our finest productions.
@@ -126,15 +126,15 @@ export default function Portfolio() {
               onClick={() => setActiveCategory(cat)}
               className={`relative px-5 py-2.5 text-xs tracking-widest uppercase font-light transition-all duration-300 border overflow-hidden ${
                 activeCategory === cat
-                  ? "bg-[#c9a84c] text-black border-[#c9a84c] font-medium"
-                  : "border-white/20 text-white/60 hover:border-[#c9a84c]/60 hover:text-[#c9a84c]"
+                  ? "bg-[#ffffff] text-black border-[#ffffff] font-medium"
+                  : "border-white/20 text-white/60 hover:border-[#ffffff]/60 hover:text-white"
               }`}
             >
               {cat}
               {activeCategory === cat && (
                 <motion.div
                   layoutId="activeFilter"
-                  className="absolute inset-0 bg-[#c9a84c] -z-10"
+                  className="absolute inset-0 bg-[#ffffff] -z-10"
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 />
               )}
@@ -159,7 +159,7 @@ export default function Portfolio() {
                 onClick={() => setActiveVideo(project.videoId)}
               >
                 {/* Thumbnail */}
-                <div className="relative aspect-video overflow-hidden border border-white/10 group-hover:border-[#c9a84c]/40 transition-colors duration-500">
+                <div className="relative aspect-video overflow-hidden border border-white/10 group-hover:border-[#ffffff]/40 transition-colors duration-500">
                   <motion.img
                     src={`https://img.youtube.com/vi/${project.videoId}/maxresdefault.jpg`}
                     alt={project.title}
@@ -178,7 +178,7 @@ export default function Portfolio() {
                   {/* Play button */}
                   <div className="absolute inset-0 flex items-center justify-center">
                     <motion.div
-                      className="w-16 h-16 rounded-full bg-[#c9a84c]/20 border-2 border-[#c9a84c] flex items-center justify-center backdrop-blur-sm"
+                      className="w-16 h-16 rounded-full bg-[#ffffff]/20 border-2 border-[#ffffff] flex items-center justify-center backdrop-blur-sm"
                       animate={{
                         scale: hoveredId === project.id ? 1.15 : 1,
                         backgroundColor: hoveredId === project.id ? "rgba(201,168,76,0.4)" : "rgba(201,168,76,0.2)",
@@ -193,8 +193,8 @@ export default function Portfolio() {
 
                   {/* Category badge */}
                   <div className="absolute top-4 left-4">
-                    <div className="px-3 py-1 bg-black/70 border border-[#c9a84c]/30 backdrop-blur-sm">
-                      <span className="text-[#c9a84c] text-[10px] tracking-widest uppercase font-light">
+                    <div className="px-3 py-1 bg-black/70 border border-[#ffffff]/30 backdrop-blur-sm">
+                      <span className="text-white text-[10px] tracking-widest uppercase font-light">
                         {project.category}
                       </span>
                     </div>
@@ -212,7 +212,7 @@ export default function Portfolio() {
                     animate={{ y: hoveredId === project.id ? 0 : 10, opacity: hoveredId === project.id ? 1 : 0.7 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <h3 className="font-cinzel text-base font-semibold text-white group-hover:text-[#c9a84c] transition-colors duration-300 mb-1">
+                    <h3 className="font-inter text-base font-semibold text-white group-hover:text-white transition-colors duration-300 mb-1">
                       {project.title}
                     </h3>
                     <p className="text-white/50 text-xs font-light leading-relaxed line-clamp-2">
@@ -237,7 +237,7 @@ export default function Portfolio() {
             href="https://www.youtube.com/@BeyondPublicityproductions"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-8 py-4 border border-[#c9a84c]/50 text-[#c9a84c] text-sm tracking-widest uppercase font-light hover:bg-[#c9a84c] hover:text-black transition-all duration-300 group/yt"
+            className="inline-flex items-center gap-3 px-8 py-4 border border-[#ffffff]/50 text-white text-sm tracking-widest uppercase font-light hover:bg-[#ffffff] hover:text-black transition-all duration-300 group/yt"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
               <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
@@ -271,7 +271,7 @@ export default function Portfolio() {
             >
               <button
                 onClick={() => setActiveVideo(null)}
-                className="absolute -top-12 right-0 text-white/60 hover:text-[#c9a84c] transition-colors text-sm tracking-widest uppercase flex items-center gap-2"
+                className="absolute -top-12 right-0 text-white/60 hover:text-white transition-colors text-sm tracking-widest uppercase flex items-center gap-2"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -280,7 +280,7 @@ export default function Portfolio() {
               </button>
               <div className="relative pb-[56.25%] h-0">
                 <iframe
-                  className="absolute top-0 left-0 w-full h-full border border-[#c9a84c]/30"
+                  className="absolute top-0 left-0 w-full h-full border border-[#ffffff]/30"
                   src={`https://www.youtube.com/embed/${activeVideo}?autoplay=1`}
                   title="Video"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

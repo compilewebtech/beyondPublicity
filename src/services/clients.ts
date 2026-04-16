@@ -4,6 +4,7 @@ import {
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { db, storage } from "@/lib/firebase";
+import { compressImage } from "@/lib/image";
 
 export interface Client {
   id: string;
@@ -27,9 +28,10 @@ export async function getClients(): Promise<Client[]> {
 
 export async function addClient(name: string, logoFile: File, order: number): Promise<string> {
   if (!db || !storage) throw new Error("Firebase not configured");
-  const fileName = `${Date.now()}-${logoFile.name}`;
+  const compressed = await compressImage(logoFile, { maxWidth: 800, maxHeight: 800, quality: 0.9 });
+  const fileName = `${Date.now()}-${compressed.name}`;
   const storageRef = ref(storage, `clients/${fileName}`);
-  await uploadBytes(storageRef, logoFile);
+  await uploadBytes(storageRef, compressed);
   const logoUrl = await getDownloadURL(storageRef);
   const docRef = await addDoc(collection(db, COLLECTION), {
     name,
@@ -48,16 +50,15 @@ export async function updateClient(id: string, data: Partial<{ name: string; ord
 
 export async function replaceClientLogo(client: Client, newFile: File): Promise<string> {
   if (!db || !storage) throw new Error("Firebase not configured");
-  // Delete old logo
+  const compressed = await compressImage(newFile, { maxWidth: 800, maxHeight: 800, quality: 0.9 });
   try {
     await deleteObject(ref(storage, client.storagePath));
   } catch {
     // Old file may not exist
   }
-  // Upload new
-  const fileName = `${Date.now()}-${newFile.name}`;
+  const fileName = `${Date.now()}-${compressed.name}`;
   const storageRef = ref(storage, `clients/${fileName}`);
-  await uploadBytes(storageRef, newFile);
+  await uploadBytes(storageRef, compressed);
   const logoUrl = await getDownloadURL(storageRef);
   await updateDoc(doc(db, COLLECTION, client.id), {
     logoUrl,

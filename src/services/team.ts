@@ -1,124 +1,98 @@
 import {
-  collection, doc, getDocs, setDoc,
-  serverTimestamp,
+  collection, addDoc, updateDoc, deleteDoc, doc,
+  getDocs, query, orderBy, serverTimestamp, type Timestamp,
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { db, storage } from "@/lib/firebase";
-
-export type OrganKey = "brain" | "heart" | "lungs" | "liver";
+import { compressImage } from "@/lib/image";
 
 export interface TeamMember {
-  id: OrganKey;
+  id: string;
   name: string;
   role: string;
-  label: string;
+  bio: string;
   photoUrl: string;
   storagePath: string;
-  skills: string[];
-  vision: string;
-  color: string;
+  order: number;
+  createdAt?: Timestamp;
 }
+
+export type TeamMemberInput = {
+  name: string;
+  role: string;
+  bio: string;
+};
 
 const COLLECTION = "teamMembers";
 
-export const defaultTeamMembers: Record<OrganKey, TeamMember> = {
-  brain: {
-    id: "brain",
-    name: "Theodor Abdo",
-    role: "Founder & Producer",
-    label: "The Brain",
-    photoUrl: "/images/team/theodor.jpg",
-    storagePath: "",
-    skills: ["Strategic Vision", "Creative Direction", "Business Leadership"],
-    vision: "Every great production starts with a bold idea. I see beyond what's in front of us — turning raw concepts into stories that move people.",
-    color: "#ffffff",
-  },
-  heart: {
-    id: "heart",
-    name: "Violette Ouais",
-    role: "Art Director",
-    label: "The Heart",
-    photoUrl: "/images/team/violette.jpg",
-    storagePath: "",
-    skills: ["Visual Design", "Set Direction", "Emotional Storytelling"],
-    vision: "Art isn't just what you see — it's what you feel. I pour passion into every frame, every color, every texture.",
-    color: "#e74c3c",
-  },
-  lungs: {
-    id: "lungs",
-    name: "Rudi Abi Hanna",
-    role: "Sound Engineer & Designer",
-    label: "The Lungs",
-    photoUrl: "/images/team/rudi.jpg",
-    storagePath: "",
-    skills: ["Sound Design", "Audio Mixing", "Live Production"],
-    vision: "Sound is the breath of a production. It gives life, rhythm, and emotion to everything the audience experiences.",
-    color: "#3498db",
-  },
-  liver: {
-    id: "liver",
-    name: "Elie Saliba",
-    role: "Production Manager",
-    label: "The Backbone",
-    photoUrl: "/images/team/elie-saliba.jpg",
-    storagePath: "",
-    skills: ["Operations", "Problem Solving", "Logistics"],
-    vision: "I make sure every moving piece works behind the scenes — so the magic in front of the camera never stops.",
-    color: "#8B6914",
-  },
-};
-
-export const organOrder: OrganKey[] = ["brain", "heart", "lungs", "liver"];
-
-export async function getTeamMembers(): Promise<Record<OrganKey, TeamMember>> {
-  if (!db) return defaultTeamMembers;
-  const snapshot = await getDocs(collection(db, COLLECTION));
-  const fromDb: Partial<Record<OrganKey, TeamMember>> = {};
-  snapshot.docs.forEach((d) => {
-    const data = d.data() as Omit<TeamMember, "id">;
-    fromDb[d.id as OrganKey] = { id: d.id as OrganKey, ...data };
-  });
-  return {
-    brain: fromDb.brain ?? defaultTeamMembers.brain,
-    heart: fromDb.heart ?? defaultTeamMembers.heart,
-    lungs: fromDb.lungs ?? defaultTeamMembers.lungs,
-    liver: fromDb.liver ?? defaultTeamMembers.liver,
-  };
+export async function getTeamMembers(): Promise<TeamMember[]> {
+  if (!db) return [];
+  const q = query(collection(db, COLLECTION), orderBy("order", "asc"));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((d) => ({ id: d.id, ...d.data() } as TeamMember));
 }
 
-export async function saveTeamMember(
-  key: OrganKey,
-  data: Omit<TeamMember, "id">
+export async function addTeamMember(
+  input: TeamMemberInput,
+  photoFile: File | null,
+  order: number
+): Promise<string> {
+  if (!db || !storage) throw new Error("Firebase not configured");
+  let photoUrl = "";
+  let storagePath = "";
+  if (photoFile) {
+    const compressed = await compressImage(photoFile, { maxWidth: 1200, maxHeight: 1200, quality: 0.85 });
+    const fileName = `${Date.now()}-${compressed.name}`;
+    storagePath = `team/${fileName}`;
+    const storageRef = ref(storage, storagePath);
+    await uploadBytes(storageRef, compressed);
+    photoUrl = await getDownloadURL(storageRef);
+  }
+  const docRef = await addDoc(collection(db, COLLECTION), {
+    ...input,
+    photoUrl,
+    storagePath,
+    order,
+    createdAt: serverTimestamp(),
+  });
+  return docRef.id;
+}
+
+export async function updateTeamMember(
+  id: string,
+  data: Partial<TeamMemberInput> & { order?: number }
 ): Promise<void> {
   if (!db) throw new Error("Firebase not configured");
-  await setDoc(doc(db, COLLECTION, key), {
-    ...data,
-    updatedAt: serverTimestamp(),
-  });
+  await updateDoc(doc(db, COLLECTION, id), data);
 }
 
-export async function uploadTeamPhoto(
-  key: OrganKey,
-  file: File,
-  previousStoragePath: string
-): Promise<{ photoUrl: string; storagePath: string }> {
+export async function replaceTeamPhoto(member: TeamMember, newFile: File): Promise<{ photoUrl: string; storagePath: string }> {
   if (!db || !storage) throw new Error("Firebase not configured");
-  if (previousStoragePath) {
+  const compressed = await compressImage(newFile, { maxWidth: 1200, maxHeight: 1200, quality: 0.85 });
+  if (member.storagePath) {
     try {
-      await deleteObject(ref(storage, previousStoragePath));
+      await deleteObject(ref(storage, member.storagePath));
     } catch {
       // old file may not exist
     }
   }
-  const storagePath = `team/${key}-${Date.now()}-${file.name}`;
+  const fileName = `${Date.now()}-${compressed.name}`;
+  const storagePath = `team/${fileName}`;
   const storageRef = ref(storage, storagePath);
-  await uploadBytes(storageRef, file);
-  
+  await uploadBytes(storageRef, compressed);
   const photoUrl = await getDownloadURL(storageRef);
-  //await setDoc(
-  //  doc(db, COLLECTION, key),
-  //  { photoUrl, storagePath, updatedAt: serverTimestamp() },
-  //  { merge: true }
-  //);
+  await updateDoc(doc(db, COLLECTION, member.id), { photoUrl, storagePath });
   return { photoUrl, storagePath };
+}
+
+export async function deleteTeamMember(member: TeamMember): Promise<void> {
+  if (!db || !storage) throw new Error("Firebase not configured");
+  if (member.storagePath) {
+    try {
+      await deleteObject(ref(storage, member.storagePath));
+    } catch {
+      // file may already be deleted
+    }
+  }
+  await deleteDoc(doc(db, COLLECTION, member.id));
 }

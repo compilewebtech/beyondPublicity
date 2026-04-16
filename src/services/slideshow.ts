@@ -4,6 +4,7 @@ import {
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { db, storage } from "@/lib/firebase";
+import { compressImage } from "@/lib/image";
 
 export interface SlideImage {
   id: string;
@@ -24,9 +25,10 @@ export async function getSlides(): Promise<SlideImage[]> {
 
 export async function uploadSlide(file: File, order: number): Promise<string> {
   if (!db || !storage) throw new Error("Firebase not configured");
-  const fileName = `${Date.now()}-${file.name}`;
+  const compressed = await compressImage(file, { maxWidth: 2400, maxHeight: 1600, quality: 0.82 });
+  const fileName = `${Date.now()}-${compressed.name}`;
   const storageRef = ref(storage, `slideshow/${fileName}`);
-  await uploadBytes(storageRef, file);
+  await uploadBytes(storageRef, compressed);
   const url = await getDownloadURL(storageRef);
   const docRef = await addDoc(collection(db, COLLECTION), {
     url,

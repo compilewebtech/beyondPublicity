@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@/contexts/AuthContext";
 import PublicSite from "@/pages/PublicSite";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import { ConfirmProvider } from "@/components/ConfirmDialog";
 
 const Login = lazy(() => import("@/pages/admin/Login"));
 const Dashboard = lazy(() => import("@/pages/admin/Dashboard"));
@@ -10,7 +12,8 @@ const PortfolioManager = lazy(() => import("@/pages/admin/PortfolioManager"));
 const SlideshowManager = lazy(() => import("@/pages/admin/SlideshowManager"));
 const ClientsManager = lazy(() => import("@/pages/admin/ClientsManager"));
 const TeamManager = lazy(() => import("@/pages/admin/TeamManager"));
-//const NotFound = lazy(() => import("@/pages/NotFound"));
+const ServicesManager = lazy(() => import("@/pages/admin/ServicesManager"));
+const NotFound = lazy(() => import("@/pages/NotFound"));
 const AdminLayout = lazy(() => import("@/components/admin/AdminLayout"));
 const ProtectedRoute = lazy(() => import("@/components/admin/ProtectedRoute"));
 
@@ -41,7 +44,11 @@ export default function App() {
             element={
               <Suspense fallback={<AdminLoader />}>
                 <ProtectedRoute>
-                  <AdminLayout />
+                  <ErrorBoundary>
+                    <ConfirmProvider>
+                      <AdminLayout />
+                    </ConfirmProvider>
+                  </ErrorBoundary>
                 </ProtectedRoute>
               </Suspense>
             }
@@ -51,12 +58,13 @@ export default function App() {
             <Route path="slideshow" element={<SlideshowManager />} />
             <Route path="clients" element={<ClientsManager />} />
             <Route path="team" element={<TeamManager />} />
+            <Route path="services" element={<ServicesManager />} />
           </Route>
           <Route
             path="*"
             element={
               <Suspense fallback={<AdminLoader />}>
-                {/* <NotFound /> */}
+                <NotFound />
               </Suspense>
             }
           />

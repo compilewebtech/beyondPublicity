@@ -7,8 +7,10 @@ import {
   updateSlideOrder,
   type SlideImage,
 } from "@/services/slideshow";
+import { useConfirm } from "@/components/ConfirmDialog";
 
 export default function SlideshowManager() {
+  const confirm = useConfirm();
   const [slides, setSlides] = useState<SlideImage[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
@@ -66,7 +68,13 @@ export default function SlideshowManager() {
   }
 
   async function handleDelete(slide: SlideImage) {
-    if (!confirm("Delete this slide?")) return;
+    const ok = await confirm({
+      title: "Delete this slide?",
+      message: "The image will be removed from the hero slideshow.",
+      confirmText: "Delete",
+      tone: "danger",
+    });
+    if (!ok) return;
     try {
       await deleteSlide(slide);
       toast.success("Slide deleted");

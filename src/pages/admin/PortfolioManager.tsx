@@ -10,6 +10,7 @@ import {
 } from "@/services/portfolio";
 import { extractVideoId, getThumbnailUrl } from "@/lib/youtube";
 import toast from "react-hot-toast";
+import { useConfirm } from "@/components/ConfirmDialog";
 
 const categories = ["Film", "Commercial", "Documentary", "Music Video", "Photography", "Post-Production"];
 
@@ -23,6 +24,7 @@ const emptyForm: PortfolioInput = {
 };
 
 export default function PortfolioManager() {
+  const confirm = useConfirm();
   const [items, setItems] = useState<PortfolioItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -106,7 +108,13 @@ export default function PortfolioManager() {
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Are you sure you want to delete this item?")) return;
+    const ok = await confirm({
+      title: "Delete this portfolio item?",
+      message: "It will be removed from the public portfolio page.",
+      confirmText: "Delete",
+      tone: "danger",
+    });
+    if (!ok) return;
     try {
       await deletePortfolioItem(id);
       toast.success("Item deleted");

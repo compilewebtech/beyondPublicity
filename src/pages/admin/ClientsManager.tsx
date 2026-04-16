@@ -8,8 +8,10 @@ import {
   deleteClient,
   type Client,
 } from "@/services/clients";
+import { useConfirm } from "@/components/ConfirmDialog";
 
 export default function ClientsManager() {
+  const confirm = useConfirm();
   const [clients, setClients] = useState<Client[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -100,7 +102,13 @@ export default function ClientsManager() {
   }
 
   async function handleDelete(client: Client) {
-    if (!confirm(`Delete ${client.name}?`)) return;
+    const ok = await confirm({
+      title: `Delete ${client.name}?`,
+      message: "This will permanently remove the client logo.",
+      confirmText: "Delete",
+      tone: "danger",
+    });
+    if (!ok) return;
     try {
       await deleteClient(client);
       toast.success("Client deleted");

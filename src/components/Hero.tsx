@@ -102,7 +102,7 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
-        {/* Tag line */}
+        {/* Tag line 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -115,7 +115,7 @@ export default function Hero() {
           </span>
           <div className="h-px w-12 bg-[#c9a84c]" />
         </motion.div>
-
+*/}
         {/* Logo Text */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -134,7 +134,7 @@ export default function Hero() {
           PRODUCTIONS
         </motion.p>
 
-        {/* Rotating Headline */}
+        {/* Rotating Headline }
         <div className="h-16 flex items-center justify-center mb-10 overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.p
@@ -186,7 +186,7 @@ export default function Hero() {
           </motion.button>
         </motion.div>
 
-        {/* Stats */}
+        {/* Stats }
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -212,9 +212,9 @@ export default function Hero() {
               <div className="text-white/50 text-xs tracking-widest uppercase mt-1 font-light">
                 {stat.label}
               </div>
-            </motion.div>
-          ))}
-        </motion.div>
+            </motion.div> 
+          ))
+        </motion.div>*/}
       </div>
 
       {/* Scroll indicator */}

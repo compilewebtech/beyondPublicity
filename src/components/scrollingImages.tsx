@@ -2,32 +2,24 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { getClients } from "@/services/clients";
 
-const fallbackImages = [
-  "https://BeyondPublicityproductions.com/wp-content/uploads/2024/02/1.png",
-  "https://BeyondPublicityproductions.com/wp-content/uploads/2024/02/2.png",
-  "https://BeyondPublicityproductions.com/wp-content/uploads/2024/02/3.png",
-  "https://BeyondPublicityproductions.com/wp-content/uploads/2024/02/1-5.png",
-  "https://BeyondPublicityproductions.com/wp-content/uploads/2024/02/3-4.png",
-  "https://BeyondPublicityproductions.com/wp-content/uploads/2024/02/2-4.png",
-  "https://BeyondPublicityproductions.com/wp-content/uploads/2024/09/Untitled-design-3.png",
-];
-
 export default function ScrollingImages() {
-  const [logos, setLogos] = useState<{ url: string; name: string }[]>(
-    fallbackImages.map((url, i) => ({ url, name: `Client ${i + 1}` }))
-  );
+  const [logos, setLogos] = useState<{ url: string; name: string }[]>([]);
 
   useEffect(() => {
     getClients()
       .then((clients) => {
-        if (clients.length > 0) {
-          setLogos(clients.map((c) => ({ url: c.logoUrl, name: c.name })));
-        }
+        setLogos(clients.map((c) => ({ url: c.logoUrl, name: c.name })));
       })
       .catch(() => {});
   }, []);
 
-  const totalWidth = logos.length * (170 + 80);
+  if (logos.length === 0) return null;
+
+  const itemWidth = 150 + 80;
+  const setWidth = logos.length * itemWidth;
+  const seamless = logos.length >= 3;
+  const MIN_SEAMLESS_WIDTH = 2800;
+  const copies = seamless ? Math.max(2, Math.ceil(MIN_SEAMLESS_WIDTH / setWidth)) : 1;
 
   return (
     <section className="py-16 bg-[#0a0a0a] overflow-hidden">
@@ -49,13 +41,17 @@ export default function ScrollingImages() {
       </motion.div>
 
       <div className="scrolling-container">
-        <div className="scrolling-content">
-          {logos.map((logo, i) => (
-            <img src={logo.url} alt={logo.name} key={i} className="scrolling-img" />
-          ))}
-          {logos.map((logo, i) => (
-            <img src={logo.url} alt={logo.name} key={`dup-${i}`} className="scrolling-img" />
-          ))}
+        <div className={seamless ? "scrolling-content-seamless" : "scrolling-content-gap"}>
+          {Array.from({ length: copies }).flatMap((_, copyIdx) =>
+            logos.map((logo, i) => (
+              <img
+                src={logo.url}
+                alt={logo.name}
+                key={`c${copyIdx}-${i}`}
+                className="scrolling-img"
+              />
+            )),
+          )}
         </div>
       </div>
 
@@ -68,12 +64,18 @@ export default function ScrollingImages() {
             mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
             -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
           }
-          .scrolling-content {
+          .scrolling-content-seamless,
+          .scrolling-content-gap {
             display: inline-flex;
-            animation: scrollImages 30s linear infinite;
             white-space: nowrap;
             align-items: center;
             height: 100%;
+          }
+          .scrolling-content-seamless {
+            animation: scrollSeamless 30s linear infinite;
+          }
+          .scrolling-content-gap {
+            animation: scrollWithGap 18s linear infinite;
           }
           .scrolling-img {
             margin-right: 80px;
@@ -87,9 +89,13 @@ export default function ScrollingImages() {
             transform: scale(1.15);
             opacity: 1;
           }
-          @keyframes scrollImages {
+          @keyframes scrollSeamless {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-${totalWidth}px); }
+            100% { transform: translateX(-${setWidth}px); }
+          }
+          @keyframes scrollWithGap {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(-${setWidth}px); }
           }
         `}
       </style>

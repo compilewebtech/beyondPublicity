@@ -2,12 +2,6 @@ import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { getSlides } from "@/services/slideshow";
 
-const headlines = [
-  "Redefining the Art of Storytelling",
-  "Crafting Cinematic Brilliance",
-  "Where Innovation Meets Impact",
-];
-
 const fallbackSlides = [
   "/images/hero-bg.jpg",
   "/images/about-bg.jpg",
@@ -15,7 +9,6 @@ const fallbackSlides = [
 ];
 
 export default function Hero() {
-  const [currentHeadline, setCurrentHeadline] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [slides, setSlides] = useState<string[]>(fallbackSlides);
 
@@ -36,18 +29,6 @@ export default function Hero() {
     const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
   }, [nextSlide, slides.length]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentHeadline((prev) => (prev + 1) % headlines.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <section
@@ -89,20 +70,6 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
-        {/* Tag line 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex items-center justify-center gap-4 mb-6"
-        >
-          <div className="h-px w-12 bg-[#ffffff]" />
-          <span className="text-white text-xs tracking-[0.4em] uppercase font-light font-raleway">
-            Lebanon's Premier Production House
-          </span>
-          <div className="h-px w-12 bg-[#ffffff]" />
-        </motion.div>
-*/}
         {/* Logo Text */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -112,22 +79,6 @@ export default function Hero() {
         >
           TURN VISION<br />INTO IMPACT
         </motion.h1>
-
-        {/* Rotating Headline }
-        <div className="h-16 flex items-center justify-center mb-10 overflow-hidden">
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={currentHeadline}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="text-xl md:text-3xl font-light text-white/90 font-raleway"
-            >
-              {headlines[currentHeadline]}
-            </motion.p>
-          </AnimatePresence>
-        </div>
 
         {/* Description */}
         <motion.p
@@ -139,36 +90,6 @@ export default function Hero() {
           We cover every aspect of production, turning ideas into cinematic brilliance,
           compelling ads, immersive experiences, and gripping movies.
         </motion.p>
-
-        {/* Stats }
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-          className="flex flex-wrap justify-center gap-12 mt-20 border-t border-white/10 pt-12"
-        >
-          {[
-            { number: "10+", label: "Years Experience" },
-            { number: "500+", label: "Projects Completed" },
-            { number: "50+", label: "Team Members" },
-            { number: "30+", label: "Awards Won" },
-          ].map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.4 + i * 0.1 }}
-              className="text-center"
-            >
-              <div className="font-inter text-3xl md:text-4xl font-bold text-white">
-                {stat.number}
-              </div>
-              <div className="text-white/50 text-xs tracking-widest uppercase mt-1 font-light">
-                {stat.label}
-              </div>
-            </motion.div> 
-          ))
-        </motion.div>*/}
       </div>
 
       {/* Scroll indicator */}

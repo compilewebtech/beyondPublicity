@@ -11,8 +11,8 @@ import {
 import { extractVideoId, getThumbnailUrl } from "@/lib/youtube";
 import toast from "react-hot-toast";
 import { useConfirm } from "@/components/ConfirmDialog";
-
-const categories = ["Film", "Commercial", "Documentary", "Music Video", "Photography", "Post-Production"];
+import { getCategories, type Category } from "@/services/categories";
+import CategoriesPanel from "@/components/admin/CategoriesPanel";
 
 const emptyForm: PortfolioInput = {
   title: "",
@@ -26,6 +26,7 @@ const emptyForm: PortfolioInput = {
 export default function PortfolioManager() {
   const confirm = useConfirm();
   const [items, setItems] = useState<PortfolioItem[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -34,7 +35,7 @@ export default function PortfolioManager() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    loadItems();
+    loadAll();
   }, []);
 
   useEffect(() => {
@@ -46,16 +47,23 @@ export default function PortfolioManager() {
     }
   }, [searchParams, setSearchParams]);
 
-  async function loadItems() {
+  async function loadAll() {
     try {
-      const data = await getPortfolioItems();
-      setItems(data);
+      const [itemsData, catsData] = await Promise.all([getPortfolioItems(), getCategories()]);
+      setItems(itemsData);
+      setCategories(catsData);
     } catch (err) {
       console.error(err);
       toast.error("Failed to load portfolio items");
     } finally {
       setLoading(false);
     }
+  }
+
+  async function reloadCategories() {
+    const [itemsData, catsData] = await Promise.all([getPortfolioItems(), getCategories()]);
+    setItems(itemsData);
+    setCategories(catsData);
   }
 
   function handleYoutubeUrl(url: string) {
@@ -85,7 +93,7 @@ export default function PortfolioManager() {
       setShowForm(false);
       setEditingId(null);
       setForm(emptyForm);
-      await loadItems();
+      await reloadCategories();
     } catch (err) {
       console.error(err);
       toast.error("Failed to save portfolio item");
@@ -118,7 +126,7 @@ export default function PortfolioManager() {
     try {
       await deletePortfolioItem(id);
       toast.success("Item deleted");
-      await loadItems();
+      await reloadCategories();
     } catch (err) {
       console.error(err);
       toast.error("Failed to delete item");
@@ -151,6 +159,8 @@ export default function PortfolioManager() {
           + Add Item
         </button>
       </div>
+
+      <CategoriesPanel categories={categories} onChange={reloadCategories} />
 
       {showForm && (
         <div className="border border-[#ffffff]/30 bg-[#ffffff]/5 p-6 mb-8">
@@ -215,11 +225,14 @@ export default function PortfolioManager() {
                   value={form.category}
                   onChange={(e) => setForm((p) => ({ ...p, category: e.target.value }))}
                   required
-                  className="w-full bg-[#0a0a0a] border border-white/10 text-white/80 px-4 py-3 text-sm font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors"
+                  disabled={categories.length === 0}
+                  className="w-full bg-[#0a0a0a] border border-white/10 text-white/80 px-4 py-3 text-sm font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors disabled:opacity-50"
                 >
-                  <option value="" disabled>Select category</option>
+                  <option value="" disabled>
+                    {categories.length === 0 ? "Add a category first" : "Select category"}
+                  </option>
                   {categories.map((cat) => (
-                    <option key={cat} value={cat}>{cat}</option>
+                    <option key={cat.id} value={cat.name}>{cat.name}</option>
                   ))}
                 </select>
               </div>

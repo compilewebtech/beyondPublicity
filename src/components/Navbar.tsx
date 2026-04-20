@@ -41,14 +41,16 @@ export default function Navbar({ activeSection }: NavbarProps) {
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <button
           onClick={() => scrollTo("#home")}
-          className="flex items-center gap-3 group"
+          className="flex items-center gap-2.5 group"
+          aria-label="BeyondPublicity — Home"
         >
           <img
             src="/images/beyondlogo.png"
-            alt="BeyondPublicity Logo"
-            className="h-15 w-auto"
+            alt=""
+            aria-hidden="true"
+            className="h-9 w-9 object-contain invert opacity-90 group-hover:opacity-100 transition-opacity duration-300"
           />
-          <span className="font-inter text-white text-xl font-bold tracking-widest">
+          <span className="font-inter text-white text-lg font-bold tracking-[0.2em] leading-none">
             BeyondPublicity
           </span>
         </button>

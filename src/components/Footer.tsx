@@ -1,4 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
+import { Link } from "react-router-dom";
 import { getServices, type Service } from "@/services/services";
 
 const scrollTo = (id: string) => {
@@ -107,9 +108,9 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { label: "Home", id: "home" },
-                { label: "About Us", id: "about" },
                 { label: "Services", id: "services" },
                 { label: "Portfolio", id: "portfolio" },
+                { label: "About Us", id: "about" },
                 { label: "Our Team", id: "team" },
                 { label: "Contact", id: "contact" },
               ].map((link) => (
@@ -157,12 +158,12 @@ export default function Footer() {
             © {new Date().getFullYear()} BeyondPublicity. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <button className="text-white/25 text-xs font-light hover:text-white transition-colors duration-300">
+            <Link to="/privacy" className="text-white/25 text-xs font-light hover:text-white transition-colors duration-300">
               Privacy Policy
-            </button>
-            <button className="text-white/25 text-xs font-light hover:text-white transition-colors duration-300">
+            </Link>
+            <Link to="/terms" className="text-white/25 text-xs font-light hover:text-white transition-colors duration-300">
               Terms of Service
-            </button>
+            </Link>
           </div>
           <p className="text-white/20 text-xs font-light">
             Beirut, Lebanon 🇱🇧

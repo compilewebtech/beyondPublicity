@@ -1,5 +1,61 @@
-node_modules
-dist
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+dist/
+dist-ssr/
+build/
+
+# Environment variables — commit only .env.example
 .env
 .env.local
+.env.development
+.env.production
 .env.*.local
+
+# TypeScript incremental build cache
+*.tsbuildinfo
+
+# Test & coverage output
+coverage/
+.vitest-cache/
+*.lcov
+
+# Firebase CLI output
+.firebase/
+firebase-debug.log
+firestore-debug.log
+database-debug.log
+pubsub-debug.log
+ui-debug.log
+firebase-debug.*.log
+firestore-debug.*.log
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS cruft
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Editors / IDEs
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# Local tooling caches
+.eslintcache
+.parcel-cache/
+.cache/

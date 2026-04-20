@@ -13,7 +13,11 @@ const SlideshowManager = lazy(() => import("@/pages/admin/SlideshowManager"));
 const ClientsManager = lazy(() => import("@/pages/admin/ClientsManager"));
 const TeamManager = lazy(() => import("@/pages/admin/TeamManager"));
 const ServicesManager = lazy(() => import("@/pages/admin/ServicesManager"));
+const LegalManager = lazy(() => import("@/pages/admin/LegalManager"));
+const AboutManager = lazy(() => import("@/pages/admin/AboutManager"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
+const Privacy = lazy(() => import("@/pages/Privacy"));
+const Terms = lazy(() => import("@/pages/Terms"));
 const AdminLayout = lazy(() => import("@/components/admin/AdminLayout"));
 const ProtectedRoute = lazy(() => import("@/components/admin/ProtectedRoute"));
 
@@ -31,6 +35,22 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<PublicSite />} />
+          <Route
+            path="/privacy"
+            element={
+              <Suspense fallback={<AdminLoader />}>
+                <Privacy />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/terms"
+            element={
+              <Suspense fallback={<AdminLoader />}>
+                <Terms />
+              </Suspense>
+            }
+          />
           <Route
             path="/admin/login"
             element={
@@ -59,6 +79,8 @@ export default function App() {
             <Route path="clients" element={<ClientsManager />} />
             <Route path="team" element={<TeamManager />} />
             <Route path="services" element={<ServicesManager />} />
+            <Route path="legal" element={<LegalManager />} />
+            <Route path="about" element={<AboutManager />} />
           </Route>
           <Route
             path="*"

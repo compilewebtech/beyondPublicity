@@ -2,22 +2,35 @@ rules_version = '2';
 
 service firebase.storage {
   match /b/{bucket}/o {
-    // Slideshow images: anyone can read, only authenticated users can upload/delete
+    // Only the site owner may write. Mirror of firestore.rules isOwner().
+    function isOwner() {
+      return request.auth != null && (
+        request.auth.token.email == "admin@admin.com"
+      );
+    }
+
+    // Cap uploads: reject anything bigger than 10 MB or not an image.
+    function isValidUpload() {
+      return request.resource.size < 10 * 1024 * 1024
+        && request.resource.contentType.matches("image/.*");
+    }
+
     match /slideshow/{fileName} {
       allow read: if true;
-      allow write, delete: if request.auth != null;
+      allow write: if isOwner() && isValidUpload();
+      allow delete: if isOwner();
     }
 
-    // Client logos: anyone can read, only authenticated users can upload/delete
     match /clients/{fileName} {
       allow read: if true;
-      allow write, delete: if request.auth != null;
+      allow write: if isOwner() && isValidUpload();
+      allow delete: if isOwner();
     }
 
-    // Team photos: anyone can read, only authenticated users can upload/delete
     match /team/{fileName} {
       allow read: if true;
-      allow write, delete: if request.auth != null;
+      allow write: if isOwner() && isValidUpload();
+      allow delete: if isOwner();
     }
   }
 }

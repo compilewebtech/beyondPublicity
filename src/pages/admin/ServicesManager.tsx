@@ -9,6 +9,7 @@ import {
   type SubItem,
 } from "@/services/services";
 import { useConfirm } from "@/components/ConfirmDialog";
+import { SERVICE_ICONS } from "@/lib/serviceIcons";
 
 interface DraftForm {
   title: string;
@@ -403,25 +404,32 @@ function ServiceFormFields({
           />
         </div>
         <div>
-          <label className="block text-white/40 text-xs tracking-widest uppercase font-light mb-2">Icon SVG Path</label>
-          <div className="flex gap-2">
-            <div className="w-12 h-12 border border-white/10 bg-white/[0.03] flex items-center justify-center text-white flex-shrink-0">
-              {draft.iconPath ? (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d={draft.iconPath} />
-                </svg>
-              ) : (
-                <span className="text-white/30 text-xs">?</span>
-              )}
-            </div>
-            <input
-              type="text"
-              value={draft.iconPath}
-              onChange={(e) => onIconChange(e.target.value)}
-              className="flex-1 bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-xs font-mono font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors"
-              placeholder='SVG path d="..." (24×24 viewBox)'
-            />
+          <label className="block text-white/40 text-xs tracking-widest uppercase font-light mb-2">Icon</label>
+          <div className="grid grid-cols-5 sm:grid-cols-8 gap-2">
+            {SERVICE_ICONS.map((icon) => {
+              const selected = draft.iconPath === icon.path;
+              return (
+                <button
+                  key={icon.key}
+                  type="button"
+                  onClick={() => onIconChange(icon.path)}
+                  title={icon.label}
+                  className={`aspect-square flex items-center justify-center border transition-colors ${
+                    selected
+                      ? "border-white bg-white/10 text-white"
+                      : "border-white/10 bg-white/[0.03] text-white/60 hover:border-white/40 hover:text-white"
+                  }`}
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d={icon.path} />
+                  </svg>
+                </button>
+              );
+            })}
           </div>
+          {!draft.iconPath && (
+            <p className="text-white/30 text-xs font-light mt-2">Select an icon above</p>
+          )}
         </div>
       </div>
 

@@ -33,8 +33,13 @@ export default function Login() {
       if (!auth) throw new Error("Firebase not configured");
       await signInWithEmailAndPassword(auth, email, password);
       navigate("/admin");
-    } catch {
-      setError("Invalid email or password");
+    } catch (err) {
+      const code = (err as { code?: string })?.code;
+      setError(
+        code === "auth/too-many-requests"
+          ? "Too many failed attempts. Please wait a few minutes and try again."
+          : "Invalid email or password",
+      );
     } finally {
       setLoading(false);
     }
@@ -67,7 +72,7 @@ export default function Login() {
               onChange={(e) => setEmail(e.target.value)}
               required
               className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors"
-              placeholder="admin@BeyondPublicityproductions.com"
+              placeholder="admin@beyondpublicitymena.com"
             />
           </div>
 

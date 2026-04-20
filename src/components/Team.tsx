@@ -1,19 +1,27 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { getTeamMembers, type TeamMember } from "@/services/team";
 
 export default function Team() {
   const [members, setMembers] = useState<TeamMember[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  useEffect(() => {
+  const load = useCallback(() => {
+    setLoading(true);
+    setError(false);
     let alive = true;
     getTeamMembers()
       .then((data) => { if (alive) setMembers(data); })
-      .catch((err) => console.error("Failed to load team", err))
+      .catch((err) => {
+        console.error("Failed to load team", err);
+        if (alive) setError(true);
+      })
       .finally(() => { if (alive) setLoading(false); });
     return () => { alive = false; };
   }, []);
+
+  useEffect(() => load(), [load]);
 
   return (
     <section id="team" className="relative py-28 bg-[#080808] overflow-hidden">
@@ -45,6 +53,16 @@ export default function Team() {
         {loading ? (
           <div className="flex items-center justify-center py-12">
             <div className="w-8 h-8 border-2 border-white/40 border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : error ? (
+          <div className="text-center py-12">
+            <p className="text-white/60 text-sm font-light mb-4">Having trouble loading the team.</p>
+            <button
+              onClick={load}
+              className="px-6 py-2 border border-white/40 text-white text-xs tracking-widest uppercase font-light hover:bg-white hover:text-black transition-all duration-300"
+            >
+              Try Again
+            </button>
           </div>
         ) : members.length === 0 ? (
           <div className="text-center py-12">

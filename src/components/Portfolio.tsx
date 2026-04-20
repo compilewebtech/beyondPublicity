@@ -1,84 +1,38 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { getPortfolioItems, type PortfolioItem } from "@/services/portfolio";
-
-const categories = ["All", "Film", "Commercial", "Documentary", "Music Video"];
-
-const fallbackProjects = [
-  {
-    id: "1",
-    title: "Echoes of Beirut",
-    category: "Film",
-    year: "2024",
-    videoId: "dQw4w9WgXcQ",
-    description: "A cinematic journey through the streets and soul of Beirut.",
-  },
-  {
-    id: "2",
-    title: "Brand Vision – HSBC",
-    category: "Commercial",
-    year: "2024",
-    videoId: "ScMzIvxBSi4",
-    description: "A compelling brand story that connects financial services to human ambition.",
-  },
-  {
-    id: "3",
-    title: "The Cedar Chronicles",
-    category: "Documentary",
-    year: "2023",
-    videoId: "L_jWHffIx5E",
-    description: "Exploring Lebanon's ancient cedar forests and the people who protect them.",
-  },
-  {
-    id: "4",
-    title: "Rising Sun",
-    category: "Music Video",
-    year: "2023",
-    videoId: "6Ejga4kJUts",
-    description: "An immersive visual experience featuring Lebanon's next generation of artists.",
-  },
-  {
-    id: "5",
-    title: "Corporate Resilience",
-    category: "Commercial",
-    year: "2023",
-    videoId: "3JZ_D3ELwOQ",
-    description: "Showcasing how leading brands in the Middle East rebuild and grow.",
-  },
-  {
-    id: "6",
-    title: "Voices of the Valley",
-    category: "Documentary",
-    year: "2022",
-    videoId: "kJQP7kiw5Fk",
-    description: "Stories from the Bekaa Valley — resilience, culture and community.",
-  },
-];
-
-interface DisplayProject {
-  id: string;
-  title: string;
-  category: string;
-  year: string;
-  videoId: string;
-  description: string;
-}
+import { getCategories, type Category } from "@/services/categories";
 
 export default function Portfolio() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
-  const [projects, setProjects] = useState<DisplayProject[]>(fallbackProjects);
+  const [projects, setProjects] = useState<PortfolioItem[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  useEffect(() => {
-    getPortfolioItems()
-      .then((items: PortfolioItem[]) => {
-        if (items.length > 0) {
-          setProjects(items);
-        }
+  const load = useCallback(() => {
+    setLoading(true);
+    setError(false);
+    let alive = true;
+    Promise.all([getPortfolioItems(), getCategories()])
+      .then(([items, cats]) => {
+        if (!alive) return;
+        setProjects(items);
+        setCategories(cats);
       })
-      .catch(() => {});
+      .catch((err) => {
+        console.error("Portfolio: failed to load", err);
+        if (alive) setError(true);
+      })
+      .finally(() => { if (alive) setLoading(false); });
+    return () => { alive = false; };
   }, []);
+
+  useEffect(() => load(), [load]);
+
+  const filterTabs = useMemo(() => ["All", ...categories.map((c) => c.name)], [categories]);
 
   const filtered = activeCategory === "All"
     ? projects
@@ -120,7 +74,7 @@ export default function Portfolio() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="flex flex-wrap justify-center gap-3 mb-12"
         >
-          {categories.map((cat) => (
+          {filterTabs.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
@@ -143,6 +97,27 @@ export default function Portfolio() {
         </motion.div>
 
         {/* Projects Grid */}
+        {loading && (
+          <div className="flex items-center justify-center py-16">
+            <div className="w-8 h-8 border-2 border-white/40 border-t-transparent rounded-full animate-spin" />
+          </div>
+        )}
+        {!loading && error && (
+          <div className="text-center py-16">
+            <p className="text-white/60 text-sm font-light mb-4">Having trouble loading the portfolio.</p>
+            <button
+              onClick={load}
+              className="px-6 py-2 border border-white/40 text-white text-xs tracking-widest uppercase font-light hover:bg-white hover:text-black transition-all duration-300"
+            >
+              Try Again
+            </button>
+          </div>
+        )}
+        {!loading && !error && filtered.length === 0 && (
+          <div className="text-center py-16 text-white/40 text-sm font-light italic">
+            {projects.length === 0 ? "New work coming soon." : "No projects in this category yet."}
+          </div>
+        )}
         <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence mode="popLayout">
             {filtered.map((project, i) => (

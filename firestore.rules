@@ -2,11 +2,12 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Only the site owner may write. Add more emails to `isOwner()` to grant access.
+    // Only the site owner may write. Add more emails to the list to grant access.
     function isOwner() {
-      return request.auth != null && (
-        request.auth.token.email == "admin@beyondpublicitymena.com"
-      );
+      return request.auth != null && request.auth.token.email in [
+        "admin@beyondpublicitymena.com",
+        "admin@admin.com"
+      ];
     }
 
     match /portfolio/{document=**} {

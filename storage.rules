@@ -4,9 +4,10 @@ service firebase.storage {
   match /b/{bucket}/o {
     // Only the site owner may write. Mirror of firestore.rules isOwner().
     function isOwner() {
-      return request.auth != null && (
-        request.auth.token.email == "admin@beyondpublicitymena.com"
-      );
+      return request.auth != null && request.auth.token.email in [
+        "admin@beyondpublicitymena.com",
+        "admin@admin.com"
+      ];
     }
 
     // Cap uploads: reject anything bigger than 10 MB or not an image.

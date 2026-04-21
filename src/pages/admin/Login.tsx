@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Navigate } from "react-router-dom";
-import { claimSession } from "@/services/sessions";
+import { claimSession, consumeSessionReplaced } from "@/services/sessions";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -13,8 +13,11 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
-  const [searchParams] = useSearchParams();
-  const replacedNotice = searchParams.get("reason") === "replaced";
+  const [replacedNotice, setReplacedNotice] = useState(false);
+
+  useEffect(() => {
+    if (consumeSessionReplaced()) setReplacedNotice(true);
+  }, []);
 
   if (authLoading) {
     return (

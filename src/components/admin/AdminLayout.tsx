@@ -4,7 +4,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useAuth } from "@/contexts/AuthContext";
 import { useIdleTimeout } from "@/lib/useIdleTimeout";
-import { claimSession, clearLocalSessionId, getLocalSessionId, watchSession } from "@/services/sessions";
+import { claimSession, clearLocalSessionId, flagSessionReplaced, getLocalSessionId, watchSession } from "@/services/sessions";
 
 const IDLE_MS = 30 * 60 * 1000;
 const WARNING_MS = 25 * 60 * 1000;
@@ -34,8 +34,8 @@ export default function AdminLayout() {
   const handleSessionReplaced = async () => {
     if (!auth) return;
     clearLocalSessionId();
+    flagSessionReplaced();
     await signOut(auth);
-    navigate("/admin/login?reason=replaced", { replace: true });
   };
 
   useEffect(() => {

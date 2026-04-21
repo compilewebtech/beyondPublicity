@@ -2,6 +2,17 @@ import { doc, onSnapshot, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 const SESSION_KEY = "bp_admin_session_id";
+const REPLACED_KEY = "bp_admin_session_replaced";
+
+export function flagSessionReplaced(): void {
+  sessionStorage.setItem(REPLACED_KEY, "1");
+}
+
+export function consumeSessionReplaced(): boolean {
+  const v = sessionStorage.getItem(REPLACED_KEY);
+  if (v) sessionStorage.removeItem(REPLACED_KEY);
+  return v === "1";
+}
 
 function newSessionId(): string {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {

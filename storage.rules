@@ -5,7 +5,7 @@ service firebase.storage {
     // Only the site owner may write. Mirror of firestore.rules isOwner().
     function isOwner() {
       return request.auth != null && (
-        request.auth.token.email == "admin@admin.com"
+        request.auth.token.email == "admin@beyondpublicitymena.com"
       );
     }
 

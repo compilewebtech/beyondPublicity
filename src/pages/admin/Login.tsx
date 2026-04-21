@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Navigate } from "react-router-dom";
+import { claimSession } from "@/services/sessions";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -12,6 +13,8 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
+  const [searchParams] = useSearchParams();
+  const replacedNotice = searchParams.get("reason") === "replaced";
 
   if (authLoading) {
     return (
@@ -31,7 +34,8 @@ export default function Login() {
     setLoading(true);
     try {
       if (!auth) throw new Error("Firebase not configured");
-      await signInWithEmailAndPassword(auth, email, password);
+      const cred = await signInWithEmailAndPassword(auth, email, password);
+      await claimSession(cred.user.uid);
       navigate("/admin");
     } catch (err) {
       const code = (err as { code?: string })?.code;
@@ -56,6 +60,11 @@ export default function Login() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5 border border-white/10 p-8 bg-white/[0.02]">
+          {replacedNotice && !error && (
+            <div className="px-4 py-3 border border-amber-500/30 bg-amber-500/10 text-amber-300 text-sm font-light">
+              Your session ended because this account was signed in on another device.
+            </div>
+          )}
           {error && (
             <div className="px-4 py-3 border border-red-500/30 bg-red-500/10 text-red-400 text-sm">
               {error}

@@ -1,7 +1,13 @@
+import { useEffect } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useAuth } from "@/contexts/AuthContext";
+import { useIdleTimeout } from "@/lib/useIdleTimeout";
+import { claimSession, clearLocalSessionId, getLocalSessionId, watchSession } from "@/services/sessions";
+
+const IDLE_MS = 30 * 60 * 1000;
+const WARNING_MS = 25 * 60 * 1000;
 
 const navItems = [
   { to: "/admin", label: "Dashboard", end: true },
@@ -20,9 +26,49 @@ export default function AdminLayout() {
 
   const handleSignOut = async () => {
     if (!auth) return;
+    clearLocalSessionId();
     await signOut(auth);
     navigate("/admin/login");
   };
+
+  const handleSessionReplaced = async () => {
+    if (!auth) return;
+    clearLocalSessionId();
+    await signOut(auth);
+    navigate("/admin/login?reason=replaced", { replace: true });
+  };
+
+  useEffect(() => {
+    if (!user) return;
+    let unsub: (() => void) | undefined;
+    let cancelled = false;
+    (async () => {
+      let sessionId = getLocalSessionId();
+      if (!sessionId) {
+        try {
+          sessionId = await claimSession(user.uid);
+        } catch {
+          return;
+        }
+      }
+      if (cancelled || !sessionId) return;
+      unsub = watchSession(user.uid, sessionId, handleSessionReplaced);
+    })();
+    return () => {
+      cancelled = true;
+      if (unsub) unsub();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.uid]);
+
+  const { warning, secondsLeft, stayActive } = useIdleTimeout({
+    idleMs: IDLE_MS,
+    warningMs: WARNING_MS,
+    onIdle: handleSignOut,
+  });
+
+  const mins = Math.floor(secondsLeft / 60);
+  const secs = secondsLeft % 60;
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white font-raleway">
@@ -75,6 +121,37 @@ export default function AdminLayout() {
       <main className="max-w-7xl mx-auto px-6 py-8">
         <Outlet />
       </main>
+
+      {warning && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+          <div className="max-w-md w-full mx-6 bg-[#0a0a0a] border border-white/20 p-8">
+            <h2 className="font-inter text-xl font-bold mb-3">Still there?</h2>
+            <p className="text-white/60 text-sm font-light mb-2">
+              You'll be signed out in
+            </p>
+            <p className="font-inter text-3xl font-bold mb-6 tracking-wider">
+              {String(mins).padStart(2, "0")}:{String(secs).padStart(2, "0")}
+            </p>
+            <p className="text-white/40 text-xs font-light mb-6">
+              For security, inactive sessions are automatically signed out.
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={stayActive}
+                className="flex-1 px-4 py-3 bg-white text-black text-xs tracking-widest uppercase font-light hover:bg-white/90 transition-colors"
+              >
+                Stay Signed In
+              </button>
+              <button
+                onClick={handleSignOut}
+                className="flex-1 px-4 py-3 border border-white/10 text-white/50 text-xs tracking-widest uppercase font-light hover:border-red-500/50 hover:text-red-400 transition-colors"
+              >
+                Sign Out Now
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

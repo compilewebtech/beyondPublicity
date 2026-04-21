@@ -5,7 +5,7 @@ service cloud.firestore {
     // Only the site owner may write. Add more emails to `isOwner()` to grant access.
     function isOwner() {
       return request.auth != null && (
-        request.auth.token.email == "admin@admin.com"
+        request.auth.token.email == "admin@beyondpublicitymena.com"
       );
     }
 
@@ -47,6 +47,11 @@ service cloud.firestore {
     match /settings/{document=**} {
       allow read: if true;
       allow write: if isOwner();
+    }
+
+    // Single-session enforcement. Each user manages their own session doc only.
+    match /sessions/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
     }
   }
 }

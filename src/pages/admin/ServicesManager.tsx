@@ -104,7 +104,7 @@ export default function ServicesManager() {
     if (!draft.iconPath.trim()) return "Icon path is required";
     if (draft.subItems.length === 0) return "Add at least one sub-item";
     for (const s of draft.subItems) {
-      if (!s.title.trim() || !s.description.trim()) return "Each sub-item needs a title and description";
+      if (!s.title.trim()) return "Each sub-item needs a title";
     }
     return null;
   }

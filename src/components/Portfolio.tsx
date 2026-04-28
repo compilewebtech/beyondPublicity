@@ -53,6 +53,13 @@ export default function Portfolio({ limit }: PortfolioProps = {}) {
   const displayed = limit !== undefined ? filtered.slice(0, limit) : filtered;
   const hasMore = limit !== undefined && projects.length > limit;
 
+  useEffect(() => {
+    if (!openMedia) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpenMedia(null); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [openMedia]);
+
   return (
     <section id="portfolio" className="relative py-28 bg-[#0a0a0a] overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#ffffff]/40 to-transparent" />
@@ -170,6 +177,8 @@ export default function Portfolio({ limit }: PortfolioProps = {}) {
                     <motion.img
                       src={thumb}
                       alt={project.title}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover"
                       animate={{ scale: hoveredId === project.id ? 1.08 : 1 }}
                       transition={{ duration: 0.7 }}
@@ -285,6 +294,9 @@ export default function Portfolio({ limit }: PortfolioProps = {}) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label={openMedia.title ?? "Media viewer"}
             className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
             onClick={() => setOpenMedia(null)}
           >
@@ -298,6 +310,7 @@ export default function Portfolio({ limit }: PortfolioProps = {}) {
             >
               <button
                 onClick={() => setOpenMedia(null)}
+                aria-label="Close media viewer"
                 className="absolute -top-12 right-0 text-white/60 hover:text-[#fcea00] transition-colors text-sm tracking-widest uppercase flex items-center gap-2"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
@@ -319,6 +332,7 @@ export default function Portfolio({ limit }: PortfolioProps = {}) {
                 <img
                   src={openMedia.photoUrl}
                   alt={openMedia.title ?? "Photo"}
+                  decoding="async"
                   className="max-h-[85vh] w-auto mx-auto border border-[#ffffff]/30"
                 />
               )}

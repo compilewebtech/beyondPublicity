@@ -116,6 +116,8 @@ export default function Services() {
                       <img
                         src={current.backgroundUrl}
                         alt={current.title}
+                        loading="lazy"
+                        decoding="async"
                         className="absolute inset-0 w-full h-full object-cover"
                       />
                     ) : (
@@ -238,6 +240,8 @@ function PeekCard({ service, side, onClick }: { service: Service; side: "left" |
         <img
           src={service.backgroundUrl}
           alt={service.title}
+          loading="lazy"
+          decoding="async"
           className="absolute inset-0 w-full h-full object-cover"
         />
       ) : (

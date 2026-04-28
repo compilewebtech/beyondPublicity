@@ -407,7 +407,16 @@ export default function AboutManager() {
                   <input
                     type="text"
                     value={content.imageUrl}
-                    onChange={(e) => updateField("imageUrl", e.target.value)}
+                    onChange={(e) => {
+                      const newUrl = e.target.value;
+                      const previousPath = content.imageStoragePath;
+                      const isOurUpload = previousPath && content.imageUrl.includes(previousPath.split("/").pop() ?? "_");
+                      if (isOurUpload && newUrl !== content.imageUrl) {
+                        deleteAboutImage(previousPath).catch(() => {});
+                      }
+                      setContent((c) => ({ ...c, imageUrl: newUrl, imageStoragePath: "" }));
+                      setDirty(true);
+                    }}
                     className="mt-3 w-full bg-white/[0.03] border border-white/10 text-white/60 px-4 py-2.5 text-xs font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors"
                     placeholder="Or paste a URL: https://..."
                   />

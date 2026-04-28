@@ -123,9 +123,9 @@ export default function AdminLayout() {
       </main>
 
       {warning && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+        <div role="dialog" aria-modal="true" aria-labelledby="idle-warning-title" className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
           <div className="max-w-md w-full mx-6 bg-[#0a0a0a] border border-white/20 p-8">
-            <h2 className="font-inter text-xl font-bold mb-3">Still there?</h2>
+            <h2 id="idle-warning-title" className="font-inter text-xl font-bold mb-3">Still there?</h2>
             <p className="text-white/60 text-sm font-light mb-2">
               You'll be signed out in
             </p>

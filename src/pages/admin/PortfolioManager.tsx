@@ -232,7 +232,19 @@ export default function PortfolioManager() {
                   <button
                     key={t}
                     type="button"
-                    onClick={() => setForm((p) => ({ ...p, mediaType: t }))}
+                    onClick={() => {
+                      const switchingFromPhotoToVideo =
+                        t === "video" && form.mediaType === "photo" && form.photoStoragePath;
+                      if (switchingFromPhotoToVideo) {
+                        const orphanPath = form.photoStoragePath!;
+                        deletePortfolioPhoto(orphanPath).catch(() => {});
+                      }
+                      setForm((p) => ({
+                        ...p,
+                        mediaType: t,
+                        ...(t === "video" ? { photoUrl: "", photoStoragePath: "", linkUrl: "" } : {}),
+                      }));
+                    }}
                     className={`px-5 py-2.5 text-xs tracking-widest uppercase font-light transition-colors border ${
                       (form.mediaType ?? "video") === t
                         ? "bg-white text-black border-white"

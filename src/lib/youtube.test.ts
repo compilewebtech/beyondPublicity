@@ -18,6 +18,14 @@ describe("extractVideoId", () => {
     expect(extractVideoId("dQw4w9WgXcQ")).toBe("dQw4w9WgXcQ");
   });
 
+  it("pulls the id from a Shorts URL", () => {
+    expect(extractVideoId("https://youtube.com/shorts/2wVG3xLU2t0?si=abc")).toBe("2wVG3xLU2t0");
+  });
+
+  it("pulls the id from a Live URL", () => {
+    expect(extractVideoId("https://www.youtube.com/live/abc12345678")).toBe("abc12345678");
+  });
+
   it("returns null for garbage input", () => {
     expect(extractVideoId("not a youtube url")).toBeNull();
     expect(extractVideoId("")).toBeNull();

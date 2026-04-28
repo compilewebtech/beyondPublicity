@@ -95,6 +95,8 @@ export default function About() {
               <img
                 src={content.imageUrl}
                 alt={content.imageAlt}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-[500px] object-cover grayscale-[20%]"
                 onError={(e) => {
                   const img = e.target as HTMLImageElement;

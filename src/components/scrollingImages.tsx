@@ -48,6 +48,8 @@ export default function ScrollingImages() {
                 src={logo.url}
                 alt={logo.name}
                 key={`c${copyIdx}-${i}`}
+                loading="lazy"
+                decoding="async"
                 className="scrolling-img"
               />
             )),

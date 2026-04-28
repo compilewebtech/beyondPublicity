@@ -36,6 +36,12 @@ export default function PublicSite() {
 
   return (
     <div className="bg-[#0a0a0a] text-white font-raleway overflow-x-hidden">
+      <a
+        href="#home"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[#fcea00] focus:text-black focus:font-semibold focus:text-sm focus:tracking-widest focus:uppercase"
+      >
+        Skip to main content
+      </a>
       <Navbar activeSection={activeSection} />
       <Hero />
       <Services />

@@ -3,9 +3,11 @@ import toast from "react-hot-toast";
 import {
   ABOUT_ICONS,
   DEFAULT_ABOUT,
+  deleteAboutImage,
   getAbout,
   iconPathFor,
   updateAbout,
+  uploadAboutImage,
   type AboutContent,
   type AboutHighlight,
 } from "@/services/about";
@@ -16,6 +18,7 @@ const emptyContent: AboutContent = {
   paragraphs: [],
   highlights: [],
   imageUrl: "",
+  imageStoragePath: "",
   imageAlt: "",
   statValue: "",
   statLabel: "",
@@ -29,6 +32,7 @@ export default function AboutManager() {
   const [saving, setSaving] = useState(false);
   const [dirty, setDirty] = useState(false);
   const [exists, setExists] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   useEffect(() => {
     load();
@@ -144,11 +148,33 @@ export default function AboutManager() {
     setDirty(true);
   }
 
-  async function handleSave() {
-    if (content.paragraphs.length === 0 && content.highlights.length === 0) {
-      toast.error("Add at least one paragraph or highlight before saving");
+  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("Image too large (max 10 MB)");
       return;
     }
+    setUploadingImage(true);
+    const previousPath = content.imageStoragePath;
+    try {
+      const { url, path } = await uploadAboutImage(file);
+      setContent((c) => ({ ...c, imageUrl: url, imageStoragePath: path }));
+      setDirty(true);
+      if (previousPath) {
+        await deleteAboutImage(previousPath);
+      }
+      toast.success("Image uploaded. Click Save to publish.");
+    } catch (err) {
+      console.error("[uploadAboutImage] failed:", err);
+      toast.error("Upload failed");
+    } finally {
+      setUploadingImage(false);
+      e.target.value = "";
+    }
+  }
+
+  async function handleSave() {
     setSaving(true);
     try {
       await updateAbout(content);
@@ -359,16 +385,31 @@ export default function AboutManager() {
                 Image & Stat Badge
               </h2>
               <div className="grid md:grid-cols-2 gap-5">
-                <div>
+                <div className="md:col-span-2">
                   <label className="block text-white/40 text-xs tracking-widest uppercase font-light mb-2">
-                    Image URL
+                    Image
                   </label>
+                  <input
+                    id="about-image-input"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    disabled={uploadingImage}
+                    className="block w-full text-white/70 text-sm file:mr-4 file:py-2 file:px-4 file:border-0 file:text-xs file:tracking-widest file:uppercase file:font-semibold file:bg-[#ffffff] file:text-black hover:file:bg-[#fcea00] file:cursor-pointer cursor-pointer disabled:opacity-50"
+                  />
+                  <p className="text-white/30 text-xs mt-2 font-light">
+                    {uploadingImage ? "Uploading..." : (
+                      <>
+                        Recommended size: <span className="text-white/50">1200 × 1500 px</span> (portrait, the image is cropped to fit). Max 10 MB.
+                      </>
+                    )}
+                  </p>
                   <input
                     type="text"
                     value={content.imageUrl}
                     onChange={(e) => updateField("imageUrl", e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/10 text-white px-4 py-3 text-sm font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors"
-                    placeholder="/images/about-bg.jpg or https://..."
+                    className="mt-3 w-full bg-white/[0.03] border border-white/10 text-white/60 px-4 py-2.5 text-xs font-light focus:outline-none focus:border-[#ffffff]/60 transition-colors"
+                    placeholder="Or paste a URL: https://..."
                   />
                 </div>
                 <div>
@@ -446,7 +487,7 @@ export default function AboutManager() {
                 <button
                   onClick={handleSave}
                   disabled={!dirty || saving}
-                  className="px-6 py-2.5 bg-[#ffffff] text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-6 py-2.5 bg-[#ffffff] text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#fcea00] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {saving ? "Saving..." : "Save & Publish"}
                 </button>

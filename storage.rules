@@ -33,5 +33,23 @@ service firebase.storage {
       allow write: if isOwner() && isValidUpload();
       allow delete: if isOwner();
     }
+
+    match /about/{fileName} {
+      allow read: if true;
+      allow write: if isOwner() && isValidUpload();
+      allow delete: if isOwner();
+    }
+
+    match /portfolio/{fileName} {
+      allow read: if true;
+      allow write: if isOwner() && isValidUpload();
+      allow delete: if isOwner();
+    }
+
+    match /services/{fileName} {
+      allow read: if true;
+      allow write: if isOwner() && isValidUpload();
+      allow delete: if isOwner();
+    }
   }
 }

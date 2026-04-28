@@ -38,7 +38,7 @@ export default function LegalPageView({ id }: Props) {
           </Link>
           <Link
             to="/"
-            className="text-white/50 text-xs tracking-widest uppercase font-light hover:text-white transition-colors"
+            className="text-white/50 text-xs tracking-widest uppercase font-light hover:text-[#fcea00] transition-colors"
           >
             ← Back to Site
           </Link>
@@ -76,10 +76,10 @@ export default function LegalPageView({ id }: Props) {
             </div>
 
             <div className="mt-12 pt-8 border-t border-white/10 flex items-center gap-6 text-xs tracking-widest uppercase font-light">
-              <Link to={`/${otherId}`} className="text-white/50 hover:text-white transition-colors">
+              <Link to={`/${otherId}`} className="text-white/50 hover:text-[#fcea00] transition-colors">
                 {otherLabel} →
               </Link>
-              <Link to="/" className="text-white/50 hover:text-white transition-colors">
+              <Link to="/" className="text-white/50 hover:text-[#fcea00] transition-colors">
                 Home
               </Link>
             </div>

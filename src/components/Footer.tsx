@@ -22,7 +22,7 @@ const socials: { label: string; href: string; icon: ReactNode }[] = [
   },
   {
     label: "YouTube",
-    href: "#",
+    href: "https://www.youtube.com/@BeyondTVonline",
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
         <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z" />
@@ -92,7 +92,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   aria-label={s.label}
                   title={s.label}
-                  className="w-9 h-9 flex items-center justify-center border border-white/10 text-white/40 hover:border-white hover:text-white transition-all duration-300"
+                  className="w-9 h-9 flex items-center justify-center border border-white/10 text-white/40 hover:border-[#fcea00] hover:text-[#fcea00] transition-all duration-300"
                 >
                   {s.icon}
                 </a>
@@ -117,7 +117,7 @@ export default function Footer() {
                 <li key={link.id}>
                   <button
                     onClick={() => scrollTo(link.id)}
-                    className="text-white/40 text-sm font-light hover:text-white transition-colors duration-300 flex items-center gap-2 group"
+                    className="text-white/40 text-sm font-light hover:text-[#fcea00] transition-colors duration-300 flex items-center gap-2 group"
                   >
                     <span className="w-0 h-px bg-[#ffffff] group-hover:w-4 transition-all duration-300" />
                     {link.label}
@@ -140,7 +140,7 @@ export default function Footer() {
                   <li key={s.id}>
                     <button
                       onClick={() => scrollTo("services")}
-                      className="text-white/40 text-sm font-light hover:text-white transition-colors duration-300 flex items-center gap-2 group text-left"
+                      className="text-white/40 text-sm font-light hover:text-[#fcea00] transition-colors duration-300 flex items-center gap-2 group text-left"
                     >
                       <span className="w-0 h-px bg-[#ffffff] group-hover:w-4 transition-all duration-300 flex-shrink-0" />
                       {s.title}
@@ -158,10 +158,10 @@ export default function Footer() {
             © {new Date().getFullYear()} BeyondPublicity. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <Link to="/privacy" className="text-white/25 text-xs font-light hover:text-white transition-colors duration-300">
+            <Link to="/privacy" className="text-white/25 text-xs font-light hover:text-[#fcea00] transition-colors duration-300">
               Privacy Policy
             </Link>
-            <Link to="/terms" className="text-white/25 text-xs font-light hover:text-white transition-colors duration-300">
+            <Link to="/terms" className="text-white/25 text-xs font-light hover:text-[#fcea00] transition-colors duration-300">
               Terms of Service
             </Link>
           </div>

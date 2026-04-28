@@ -2,7 +2,8 @@ import {
   collection, addDoc, updateDoc, deleteDoc, doc,
   getDocs, query, orderBy, serverTimestamp, type Timestamp,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import { db, storage } from "@/lib/firebase";
 
 export interface SubItem {
   number: string;
@@ -16,6 +17,8 @@ export interface Service {
   iconPath: string;
   subItems: SubItem[];
   order: number;
+  backgroundUrl?: string;
+  backgroundStoragePath?: string;
   createdAt?: Timestamp;
 }
 
@@ -23,7 +26,28 @@ export type ServiceInput = {
   title: string;
   iconPath: string;
   subItems: SubItem[];
+  backgroundUrl?: string;
+  backgroundStoragePath?: string;
 };
+
+export async function uploadServiceBackground(file: File): Promise<{ url: string; path: string }> {
+  if (!storage) throw new Error("Firebase Storage not configured");
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+  const path = `services/${Date.now()}-${safeName}`;
+  const fileRef = ref(storage, path);
+  await uploadBytes(fileRef, file);
+  const url = await getDownloadURL(fileRef);
+  return { url, path };
+}
+
+export async function deleteServiceBackground(path: string): Promise<void> {
+  if (!storage) return;
+  try {
+    await deleteObject(ref(storage, path));
+  } catch (err) {
+    console.warn("deleteServiceBackground failed", err);
+  }
+}
 
 const COLLECTION = "services";
 

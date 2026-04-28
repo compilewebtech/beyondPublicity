@@ -18,6 +18,7 @@ const AboutManager = lazy(() => import("@/pages/admin/AboutManager"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 const Privacy = lazy(() => import("@/pages/Privacy"));
 const Terms = lazy(() => import("@/pages/Terms"));
+const AllProjects = lazy(() => import("@/pages/AllProjects"));
 const AdminLayout = lazy(() => import("@/components/admin/AdminLayout"));
 const ProtectedRoute = lazy(() => import("@/components/admin/ProtectedRoute"));
 
@@ -48,6 +49,14 @@ export default function App() {
             element={
               <Suspense fallback={<AdminLoader />}>
                 <Terms />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/projects"
+            element={
+              <Suspense fallback={<AdminLoader />}>
+                <AllProjects />
               </Suspense>
             }
           />

@@ -1,5 +1,6 @@
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import { db, storage } from "@/lib/firebase";
 
 export interface AboutHighlight {
   iconKey: string;
@@ -11,6 +12,7 @@ export interface AboutContent {
   paragraphs: string[];
   highlights: AboutHighlight[];
   imageUrl: string;
+  imageStoragePath: string;
   imageAlt: string;
   statValue: string;
   statLabel: string;
@@ -27,6 +29,7 @@ export async function getAbout(): Promise<AboutContent | null> {
     paragraphs: Array.isArray(data.paragraphs) ? data.paragraphs : [],
     highlights: Array.isArray(data.highlights) ? data.highlights : [],
     imageUrl: data.imageUrl ?? "",
+    imageStoragePath: data.imageStoragePath ?? "",
     imageAlt: data.imageAlt ?? "",
     statValue: data.statValue ?? "",
     statLabel: data.statLabel ?? "",
@@ -39,6 +42,25 @@ export async function updateAbout(content: AboutContent): Promise<void> {
     ...content,
     updatedAt: serverTimestamp(),
   });
+}
+
+export async function uploadAboutImage(file: File): Promise<{ url: string; path: string }> {
+  if (!storage) throw new Error("Firebase Storage not configured");
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+  const path = `about/${Date.now()}-${safeName}`;
+  const fileRef = ref(storage, path);
+  await uploadBytes(fileRef, file);
+  const url = await getDownloadURL(fileRef);
+  return { url, path };
+}
+
+export async function deleteAboutImage(path: string): Promise<void> {
+  if (!storage) return;
+  try {
+    await deleteObject(ref(storage, path));
+  } catch (err) {
+    console.warn("deleteAboutImage failed", err);
+  }
 }
 
 export const ABOUT_ICONS: { key: string; label: string; path: string }[] = [
@@ -101,6 +123,7 @@ export const DEFAULT_ABOUT: AboutContent = {
     { iconKey: "sound", title: "Sound Engineers", description: "Crafting immersive audio experiences" },
   ],
   imageUrl: "/images/about-bg.jpg",
+  imageStoragePath: "",
   imageAlt: "BeyondPublicity Productions Studio",
   statValue: "10+",
   statLabel: "Years of Excellence",

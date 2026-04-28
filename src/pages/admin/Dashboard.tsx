@@ -88,7 +88,7 @@ export default function Dashboard() {
         <div className="flex flex-wrap gap-3">
           <Link
             to="/admin/portfolio?action=add"
-            className="px-5 py-2.5 bg-[#ffffff] text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors"
+            className="px-5 py-2.5 bg-[#ffffff] text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#fcea00] transition-colors"
           >
             Add Portfolio Item
           </Link>

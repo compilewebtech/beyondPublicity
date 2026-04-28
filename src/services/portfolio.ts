@@ -10,7 +10,10 @@ import {
   serverTimestamp,
   type Timestamp,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import { db, storage } from "@/lib/firebase";
+
+export type PortfolioMediaType = "video" | "photo";
 
 export interface PortfolioItem {
   id: string;
@@ -20,12 +23,36 @@ export interface PortfolioItem {
   videoId: string;
   youtubeUrl: string;
   description: string;
+  mediaType?: PortfolioMediaType;
+  vertical?: boolean;
+  photoUrl?: string;
+  photoStoragePath?: string;
+  linkUrl?: string;
   createdAt: Timestamp;
 }
 
 export type PortfolioInput = Omit<PortfolioItem, "id" | "createdAt">;
 
 const COLLECTION = "portfolio";
+
+export async function uploadPortfolioPhoto(file: File): Promise<{ url: string; path: string }> {
+  if (!storage) throw new Error("Firebase Storage not configured");
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+  const path = `portfolio/${Date.now()}-${safeName}`;
+  const fileRef = ref(storage, path);
+  await uploadBytes(fileRef, file);
+  const url = await getDownloadURL(fileRef);
+  return { url, path };
+}
+
+export async function deletePortfolioPhoto(path: string): Promise<void> {
+  if (!storage) return;
+  try {
+    await deleteObject(ref(storage, path));
+  } catch (err) {
+    console.warn("deletePortfolioPhoto failed (may already be removed)", err);
+  }
+}
 
 export async function getPortfolioItems(): Promise<PortfolioItem[]> {
   if (!db) return [];

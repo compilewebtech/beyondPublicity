@@ -5,6 +5,8 @@ import {
   addService,
   updateService,
   deleteService,
+  uploadServiceBackground,
+  deleteServiceBackground,
   type Service,
   type SubItem,
 } from "@/services/services";
@@ -15,6 +17,8 @@ interface DraftForm {
   title: string;
   iconPath: string;
   subItems: SubItem[];
+  backgroundUrl: string;
+  backgroundStoragePath: string;
 }
 
 const blankSubItem: SubItem = { number: "", title: "", description: "" };
@@ -23,10 +27,12 @@ const emptyDraft: DraftForm = {
   title: "",
   iconPath: "",
   subItems: [
-    { number: "01", title: "", description: "" },
-    { number: "02", title: "", description: "" },
-    { number: "03", title: "", description: "" },
+    { number: "", title: "", description: "" },
+    { number: "", title: "", description: "" },
+    { number: "", title: "", description: "" },
   ],
+  backgroundUrl: "",
+  backgroundStoragePath: "",
 };
 
 export default function ServicesManager() {
@@ -61,6 +67,8 @@ export default function ServicesManager() {
       title: svc.title,
       iconPath: svc.iconPath,
       subItems: svc.subItems.map((s) => ({ ...s })),
+      backgroundUrl: svc.backgroundUrl ?? "",
+      backgroundStoragePath: svc.backgroundStoragePath ?? "",
     });
   }
 
@@ -87,7 +95,7 @@ export default function ServicesManager() {
     const setter = target === "add" ? setAddDraft : setEditDraft;
     setter((d) => ({
       ...d,
-      subItems: [...d.subItems, { ...blankSubItem, number: String(d.subItems.length + 1).padStart(2, "0") }],
+      subItems: [...d.subItems, { ...blankSubItem }],
     }));
   }
 
@@ -97,6 +105,44 @@ export default function ServicesManager() {
       ...d,
       subItems: d.subItems.filter((_, i) => i !== index),
     }));
+  }
+
+  async function handleBackgroundUpload(
+    target: "add" | "edit",
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("Image too large (max 10 MB)");
+      return;
+    }
+    const setter = target === "add" ? setAddDraft : setEditDraft;
+    const current = target === "add" ? addDraft : editDraft;
+    const previousPath = current.backgroundStoragePath;
+    try {
+      const { url, path } = await uploadServiceBackground(file);
+      setter((d) => ({ ...d, backgroundUrl: url, backgroundStoragePath: path }));
+      if (previousPath) {
+        await deleteServiceBackground(previousPath);
+      }
+      toast.success("Background uploaded");
+    } catch (err) {
+      console.error(err);
+      toast.error("Upload failed");
+    } finally {
+      e.target.value = "";
+    }
+  }
+
+  function clearBackground(target: "add" | "edit") {
+    const setter = target === "add" ? setAddDraft : setEditDraft;
+    const current = target === "add" ? addDraft : editDraft;
+    const previousPath = current.backgroundStoragePath;
+    setter((d) => ({ ...d, backgroundUrl: "", backgroundStoragePath: "" }));
+    if (previousPath) {
+      deleteServiceBackground(previousPath).catch(() => {});
+    }
   }
 
   function validateDraft(draft: DraftForm): string | null {
@@ -125,6 +171,8 @@ export default function ServicesManager() {
             title: s.title.trim(),
             description: s.description.trim(),
           })),
+          backgroundUrl: addDraft.backgroundUrl,
+          backgroundStoragePath: addDraft.backgroundStoragePath,
         },
         nextOrder
       );
@@ -153,6 +201,8 @@ export default function ServicesManager() {
           title: s.title.trim(),
           description: s.description.trim(),
         })),
+        backgroundUrl: editDraft.backgroundUrl,
+        backgroundStoragePath: editDraft.backgroundStoragePath,
       });
       toast.success("Saved");
       setEditingId(null);
@@ -177,6 +227,9 @@ export default function ServicesManager() {
     setBusyId(svc.id);
     try {
       await deleteService(svc.id);
+      if (svc.backgroundStoragePath) {
+        await deleteServiceBackground(svc.backgroundStoragePath);
+      }
       toast.success("Deleted");
       await loadServices();
     } catch (err) {
@@ -227,7 +280,7 @@ export default function ServicesManager() {
         {!adding && (
           <button
             onClick={() => setAdding(true)}
-            className="px-5 py-2.5 bg-white text-black text-xs tracking-widest uppercase font-semibold hover:bg-white/80 transition-colors"
+            className="px-5 py-2.5 bg-white text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#fcea00] transition-colors"
           >
             + Add Service
           </button>
@@ -247,12 +300,14 @@ export default function ServicesManager() {
             onSubItemChange={(i, f, v) => updateSubItem("add", i, f, v)}
             onAddSubItem={() => addSubItemRow("add")}
             onRemoveSubItem={(i) => removeSubItemRow("add", i)}
+            onBackgroundUpload={(e) => handleBackgroundUpload("add", e)}
+            onBackgroundClear={() => clearBackground("add")}
           />
           <div className="flex gap-3">
             <button
               type="submit"
               disabled={busyId === "__add__"}
-              className="px-6 py-2.5 bg-white text-black text-xs tracking-widest uppercase font-semibold hover:bg-white/80 transition-colors disabled:opacity-50"
+              className="px-6 py-2.5 bg-white text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#fcea00] transition-colors disabled:opacity-50"
             >
               {busyId === "__add__" ? "Adding..." : "Add Service"}
             </button>
@@ -289,12 +344,14 @@ export default function ServicesManager() {
                       onSubItemChange={(i2, f, v) => updateSubItem("edit", i2, f, v)}
                       onAddSubItem={() => addSubItemRow("edit")}
                       onRemoveSubItem={(i2) => removeSubItemRow("edit", i2)}
+                      onBackgroundUpload={(e) => handleBackgroundUpload("edit", e)}
+                      onBackgroundClear={() => clearBackground("edit")}
                     />
                     <div className="flex gap-3">
                       <button
                         onClick={() => handleSaveEdit(svc)}
                         disabled={isBusy}
-                        className="px-6 py-2.5 bg-white text-black text-xs tracking-widest uppercase font-semibold hover:bg-white/80 transition-colors disabled:opacity-50"
+                        className="px-6 py-2.5 bg-white text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#fcea00] transition-colors disabled:opacity-50"
                       >
                         {isBusy ? "Saving..." : "Save"}
                       </button>
@@ -359,9 +416,8 @@ export default function ServicesManager() {
                       </div>
                     </div>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 pl-16">
-                      {svc.subItems.map((s) => (
-                        <div key={s.number + s.title} className="border border-white/5 bg-white/[0.02] p-4">
-                          <div className="text-white/30 text-[10px] tracking-widest font-light mb-1">{s.number}</div>
+                      {svc.subItems.map((s, si) => (
+                        <div key={`${si}-${s.title}`} className="border border-white/5 bg-white/[0.02] p-4">
                           <div className="text-white text-sm font-semibold mb-1">{s.title}</div>
                           <div className="text-white/50 text-xs font-light leading-relaxed">{s.description}</div>
                         </div>
@@ -385,10 +441,13 @@ interface ServiceFormFieldsProps {
   onSubItemChange: (index: number, field: keyof SubItem, value: string) => void;
   onAddSubItem: () => void;
   onRemoveSubItem: (index: number) => void;
+  onBackgroundUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBackgroundClear: () => void;
 }
 
 function ServiceFormFields({
   draft, onTitleChange, onIconChange, onSubItemChange, onAddSubItem, onRemoveSubItem,
+  onBackgroundUpload, onBackgroundClear,
 }: ServiceFormFieldsProps) {
   return (
     <>
@@ -434,6 +493,37 @@ function ServiceFormFields({
       </div>
 
       <div>
+        <label className="block text-white/40 text-xs tracking-widest uppercase font-light mb-2">
+          Background Image <span className="text-white/30 normal-case tracking-normal">(optional)</span>
+        </label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={onBackgroundUpload}
+          className="block w-full text-white/70 text-sm file:mr-4 file:py-2 file:px-4 file:border-0 file:text-xs file:tracking-widest file:uppercase file:font-semibold file:bg-[#ffffff] file:text-black hover:file:bg-[#fcea00] file:cursor-pointer cursor-pointer"
+        />
+        <p className="text-white/30 text-xs mt-2 font-light">
+          Shown behind the service card. Recommended size: <span className="text-white/50">1000 × 1250 px</span> (4:5 portrait). Max 10 MB.
+        </p>
+        {draft.backgroundUrl && (
+          <div className="mt-3 flex items-start gap-3">
+            <img
+              src={draft.backgroundUrl}
+              alt="Background preview"
+              className="w-48 h-28 object-cover border border-white/10"
+            />
+            <button
+              type="button"
+              onClick={onBackgroundClear}
+              className="py-2 px-3 border border-white/10 text-white/50 text-xs tracking-widest uppercase font-light hover:border-red-500/60 hover:text-red-400 transition-colors"
+            >
+              Remove
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div>
         <div className="flex items-center justify-between mb-3">
           <label className="block text-white/40 text-xs tracking-widest uppercase font-light">Sub-items</label>
           <button
@@ -446,14 +536,7 @@ function ServiceFormFields({
         </div>
         <div className="space-y-3">
           {draft.subItems.map((s, i) => (
-            <div key={i} className="border border-white/10 bg-white/[0.02] p-4 grid sm:grid-cols-[80px_1fr_auto] gap-3 items-start">
-              <input
-                type="text"
-                value={s.number}
-                onChange={(e) => onSubItemChange(i, "number", e.target.value)}
-                placeholder="01"
-                className="bg-white/[0.03] border border-white/10 text-white px-3 py-2 text-sm font-light focus:outline-none focus:border-[#ffffff]/60"
-              />
+            <div key={i} className="border border-white/10 bg-white/[0.02] p-4 grid sm:grid-cols-[1fr_auto] gap-3 items-start">
               <div className="space-y-2">
                 <input
                   type="text"
@@ -465,7 +548,7 @@ function ServiceFormFields({
                 <textarea
                   value={s.description}
                   onChange={(e) => onSubItemChange(i, "description", e.target.value)}
-                  placeholder="Description"
+                  placeholder="Description (optional)"
                   rows={2}
                   className="w-full bg-white/[0.03] border border-white/10 text-white px-3 py-2 text-sm font-light focus:outline-none focus:border-[#ffffff]/60 resize-none"
                 />

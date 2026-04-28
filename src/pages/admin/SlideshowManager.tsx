@@ -135,10 +135,10 @@ export default function SlideshowManager() {
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              className="block w-full text-white/70 text-sm file:mr-4 file:py-2 file:px-4 file:border-0 file:text-xs file:tracking-widest file:uppercase file:font-semibold file:bg-[#ffffff] file:text-black hover:file:bg-[#d4b86a] file:cursor-pointer cursor-pointer"
+              className="block w-full text-white/70 text-sm file:mr-4 file:py-2 file:px-4 file:border-0 file:text-xs file:tracking-widest file:uppercase file:font-semibold file:bg-[#ffffff] file:text-black hover:file:bg-[#fcea00] file:cursor-pointer cursor-pointer"
             />
             <p className="text-white/30 text-xs mt-2 font-light">
-              Recommended: 1920×1080 or larger, under 10MB
+              Recommended size: <span className="text-white/50">1920 × 1080 px</span> (16:9 landscape) or larger. Max 10 MB.
             </p>
           </div>
 
@@ -152,7 +152,7 @@ export default function SlideshowManager() {
         <button
           type="submit"
           disabled={uploading || !file}
-          className="mt-6 px-8 py-3 bg-[#ffffff] text-black text-sm tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors disabled:opacity-50"
+          className="mt-6 px-8 py-3 bg-[#ffffff] text-black text-sm tracking-widest uppercase font-semibold hover:bg-[#fcea00] transition-colors disabled:opacity-50"
         >
           {uploading ? "Uploading..." : "Upload Slide"}
         </button>

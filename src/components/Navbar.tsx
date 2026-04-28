@@ -64,7 +64,7 @@ export default function Navbar({ activeSection }: NavbarProps) {
                 className={`relative text-sm tracking-widest font-light uppercase transition-colors duration-300 ${
                   activeSection === link.href.replace("#", "")
                     ? "text-white"
-                    : "text-white/70 hover:text-white"
+                    : "text-white/70 hover:text-[#fcea00]"
                 } after:absolute after:-bottom-1 after:left-0 after:h-px after:bg-white after:transition-all after:duration-300 ${
                   activeSection === link.href.replace("#", "")
                     ? "after:w-full"

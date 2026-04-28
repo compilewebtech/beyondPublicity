@@ -40,7 +40,7 @@ export default function PublicSite() {
       <Hero />
       <Services />
       <ScrollingImages />
-      <Portfolio />
+      <Portfolio limit={6} />
       <About />
       <Team />
       <Contact />

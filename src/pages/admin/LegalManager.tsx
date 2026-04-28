@@ -305,7 +305,7 @@ export default function LegalManager() {
                 <button
                   onClick={handleSave}
                   disabled={!dirty || saving}
-                  className="px-6 py-2.5 bg-[#ffffff] text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-6 py-2.5 bg-[#ffffff] text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#fcea00] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {saving ? "Saving..." : "Save & Publish"}
                 </button>

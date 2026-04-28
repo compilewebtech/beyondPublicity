@@ -16,13 +16,13 @@ export default function NotFound() {
         <div className="flex gap-3 justify-center">
           <Link
             to="/"
-            className="px-6 py-3 bg-white text-black text-xs tracking-widest uppercase font-semibold hover:bg-white/80 transition-colors"
+            className="px-6 py-3 bg-white text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#fcea00] transition-colors"
           >
             Go Home
           </Link>
           <Link
             to="/#contact"
-            className="px-6 py-3 border border-white/20 text-white/60 text-xs tracking-widest uppercase font-light hover:border-white hover:text-white transition-colors"
+            className="px-6 py-3 border border-white/20 text-white/60 text-xs tracking-widest uppercase font-light hover:border-[#fcea00] hover:text-[#fcea00] transition-colors"
           >
             Contact Us
           </Link>

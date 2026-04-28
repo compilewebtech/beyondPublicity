@@ -167,7 +167,7 @@ export default function CategoriesPanel({ categories, onChange }: Props) {
             <button
               type="submit"
               disabled={busy || !newName.trim()}
-              className="px-5 py-2.5 bg-[#ffffff] text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors disabled:opacity-50"
+              className="px-5 py-2.5 bg-[#ffffff] text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#fcea00] transition-colors disabled:opacity-50"
             >
               + Add
             </button>
@@ -206,7 +206,7 @@ export default function CategoriesPanel({ categories, onChange }: Props) {
                       <button
                         onClick={() => saveEdit(cat)}
                         disabled={busy}
-                        className="px-3 py-2 bg-[#ffffff] text-black text-[10px] tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors disabled:opacity-50"
+                        className="px-3 py-2 bg-[#ffffff] text-black text-[10px] tracking-widest uppercase font-semibold hover:bg-[#fcea00] transition-colors disabled:opacity-50"
                       >
                         Save
                       </button>

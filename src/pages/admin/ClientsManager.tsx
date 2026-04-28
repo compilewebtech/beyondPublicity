@@ -162,7 +162,7 @@ export default function ClientsManager() {
             setFile(null);
             setPreview(null);
           }}
-          className="px-5 py-2.5 bg-[#ffffff] text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors"
+          className="px-5 py-2.5 bg-[#ffffff] text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#fcea00] transition-colors"
         >
           {showForm ? "Close" : "+ Add Client"}
         </button>
@@ -210,10 +210,11 @@ export default function ClientsManager() {
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
-                className="block w-full text-white/70 text-sm file:mr-4 file:py-2 file:px-4 file:border-0 file:text-xs file:tracking-widest file:uppercase file:font-semibold file:bg-[#ffffff] file:text-black hover:file:bg-[#d4b86a] file:cursor-pointer cursor-pointer"
+                className="block w-full text-white/70 text-sm file:mr-4 file:py-2 file:px-4 file:border-0 file:text-xs file:tracking-widest file:uppercase file:font-semibold file:bg-[#ffffff] file:text-black hover:file:bg-[#fcea00] file:cursor-pointer cursor-pointer"
               />
               <p className="text-white/30 text-xs mt-2 font-light">
-                PNG with transparent background works best
+                PNG with transparent background works best. Recommended size:
+                <span className="text-white/50"> 400 × 200 px</span> (roughly 2:1 landscape). Max 10 MB.
               </p>
             </div>
 
@@ -227,7 +228,7 @@ export default function ClientsManager() {
           <button
             type="submit"
             disabled={saving}
-            className="px-8 py-3 bg-[#ffffff] text-black text-sm tracking-widest uppercase font-semibold hover:bg-[#d4b86a] transition-colors disabled:opacity-50"
+            className="px-8 py-3 bg-[#ffffff] text-black text-sm tracking-widest uppercase font-semibold hover:bg-[#fcea00] transition-colors disabled:opacity-50"
           >
             {saving ? "Saving..." : editingId ? "Update Client" : "Add Client"}
           </button>

@@ -208,7 +208,7 @@ export default function TeamManager() {
         {!adding && (
           <button
             onClick={() => setAdding(true)}
-            className="px-5 py-2.5 bg-white text-black text-xs tracking-widest uppercase font-semibold hover:bg-white/80 transition-colors"
+            className="px-5 py-2.5 bg-white text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#fcea00] transition-colors"
           >
             + Add Member
           </button>
@@ -237,6 +237,9 @@ export default function TeamManager() {
                   Choose Photo
                 </span>
               </label>
+              <p className="text-white/30 text-[10px] font-light text-center max-w-[12rem] leading-relaxed">
+                Recommended: <span className="text-white/50">900 × 1200 px</span> (3:4 portrait), shot on a black/dark background. Max 10 MB.
+              </p>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-5">
@@ -274,7 +277,7 @@ export default function TeamManager() {
             <button
               type="submit"
               disabled={busyId === "__add__"}
-              className="px-6 py-2.5 bg-white text-black text-xs tracking-widest uppercase font-semibold hover:bg-white/80 transition-colors disabled:opacity-50"
+              className="px-6 py-2.5 bg-white text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#fcea00] transition-colors disabled:opacity-50"
             >
               {busyId === "__add__" ? "Adding..." : "Add Member"}
             </button>
@@ -320,6 +323,9 @@ export default function TeamManager() {
                           Replace Photo
                         </span>
                       </label>
+                      <p className="text-white/30 text-[10px] font-light text-center max-w-[10rem] leading-relaxed">
+                        900 × 1200 px (3:4) on black bg. Max 10 MB.
+                      </p>
                     </div>
                     <input
                       type="text"
@@ -346,7 +352,7 @@ export default function TeamManager() {
                       <button
                         onClick={() => handleSaveEdit(member)}
                         disabled={isBusy}
-                        className="flex-1 py-2 bg-white text-black text-xs tracking-widest uppercase font-semibold hover:bg-white/80 transition-colors disabled:opacity-50"
+                        className="flex-1 py-2 bg-white text-black text-xs tracking-widest uppercase font-semibold hover:bg-[#fcea00] transition-colors disabled:opacity-50"
                       >
                         {isBusy ? "Saving..." : "Save"}
                       </button>

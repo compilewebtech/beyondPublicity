@@ -11,12 +11,13 @@ export default function About() {
       .then((data) => {
         if (!alive || !data) return;
         setContent({
-          paragraphs: data.paragraphs.length > 0 ? data.paragraphs : DEFAULT_ABOUT.paragraphs,
-          highlights: data.highlights.length > 0 ? data.highlights : DEFAULT_ABOUT.highlights,
+          paragraphs: data.paragraphs,
+          highlights: data.highlights,
           imageUrl: data.imageUrl || DEFAULT_ABOUT.imageUrl,
+          imageStoragePath: data.imageStoragePath,
           imageAlt: data.imageAlt || DEFAULT_ABOUT.imageAlt,
-          statValue: data.statValue || DEFAULT_ABOUT.statValue,
-          statLabel: data.statLabel || DEFAULT_ABOUT.statLabel,
+          statValue: data.statValue,
+          statLabel: data.statLabel,
         });
       })
       .catch((err) => console.error("About: failed to load", err));
